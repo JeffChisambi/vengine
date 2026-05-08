@@ -130,6 +130,58 @@ const SULFATE_IONS = [
   { cx: 225, baseY: 250, delay: 0.3 },
 ];
 
+/* Cu²⁺ particles traveling the full anode→cathode journey
+   kx/ky are cx/cy keyframe arrays following an arcing path */
+const CU_TRAVEL = [
+  { kx:[143,172,205,245,259], ky:[218,242,298,268,252], delay:0.0,  dur:2.9, r:5.5 },
+  { kx:[143,170,210,248,258], ky:[262,300,318,290,274], delay:0.85, dur:3.2, r:4.5 },
+  { kx:[143,178,210,244,258], ky:[304,272,244,262,302], delay:1.55, dur:2.7, r:5.0 },
+  { kx:[144,174,205,246,258], ky:[238,282,266,314,284], delay:0.35, dur:3.4, r:3.8 },
+  { kx:[143,190,218,248,258], ky:[282,216,236,250,265], delay:2.1,  dur:2.8, r:4.8 },
+  { kx:[144,176,210,246,257], ky:[326,304,286,302,322], delay:1.25, dur:3.0, r:4.0 },
+  { kx:[143,182,212,247,257], ky:[344,320,338,326,342], delay:2.5,  dur:3.3, r:3.5 },
+  { kx:[144,168,206,248,258], ky:[248,290,320,285,258], delay:1.75, dur:3.1, r:4.2 },
+];
+
+/* Small copper fragments that visibly pop off the anode face */
+const ANODE_FRAGMENTS = [
+  { sx:144, sy:220, delay:0.0,  dur:0.9, r:3.5 },
+  { sx:143, sy:258, delay:0.6,  dur:1.0, r:2.8 },
+  { sx:145, sy:302, delay:1.2,  dur:0.85,r:3.2 },
+  { sx:143, sy:238, delay:1.8,  dur:0.95,r:2.5 },
+  { sx:144, sy:278, delay:0.4,  dur:1.05,r:3.0 },
+  { sx:143, sy:324, delay:1.0,  dur:0.92,r:2.8 },
+  { sx:144, sy:248, delay:2.3,  dur:0.88,r:2.0 },
+];
+
+/* Compute the SVG path string for the eroding anode rod.
+   The right face (facing the cathode) develops organic pits as erosion 0→1. */
+function buildAnodePath(cx, topY, height, erosion) {
+  const halfW = 10;
+  const left = cx - halfW;
+  const rightBase = cx + halfW;
+  const bot = topY + height;
+  const solutionY = 192;
+  const N = 28;
+  const pts = [];
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const y = topY + t * height;
+    const inSol = y > solutionY ? 1.0 : 0.28;
+    const e = erosion * inSol;
+    const bite =
+      e * 9  * Math.max(0, Math.sin(t * Math.PI * 3.7 + 0.52)) +
+      e * 6  * Math.max(0, Math.sin(t * Math.PI * 8.3 + 1.85)) +
+      e * 3.5* Math.max(0, Math.sin(t * Math.PI * 15.1 + 0.73)) +
+      e * 2  * Math.max(0, Math.sin(t * Math.PI * 23.6 + 1.1));
+    pts.push([rightBase - bite, y]);
+  }
+  let d = `M${left},${topY} L${rightBase},${topY}`;
+  for (const [x, y] of pts) d += ` L${x},${y}`;
+  d += ` L${left},${bot} Z`;
+  return d;
+}
+
 /* ══════════════════════════════════════════════════════════════════════
    SVG 0 — INTRO OVERVIEW
 ══════════════════════════════════════════════════════════════════════ */
@@ -527,76 +579,113 @@ export function ElectrolysisMainSVG({
           </>
         )}
 
-        {/* Cu²⁺ ions moving TOWARD cathode (right) when running */}
-        {running && CU_IONS.map((ion, i) => (
-          <motion.g key={`cu${i}`}>
-            <motion.circle r={3.5} fill="#f59e0b" fillOpacity={0.85}
-              initial={{ cx: ion.cx, cy: ion.baseY }}
+        {/* ── Cu²⁺ particles: travel all the way from anode face to cathode ── */}
+        {running && CU_TRAVEL.map((route, i) => (
+          <motion.g key={`tr${i}`}>
+            {/* Glow halo so particle is unmissable */}
+            <motion.circle
+              r={route.r + 3} fill="#f59e0b"
+              initial={{ cx: route.kx[0], cy: route.ky[0], fillOpacity: 0 }}
               animate={{
-                cx: [ion.cx, ion.cx + 18, ion.cx + 8],
-                cy: [ion.baseY, ion.baseY - 18, ion.baseY],
+                cx: route.kx,
+                cy: route.ky,
+                fillOpacity: [0, 0.18, 0.25, 0.12, 0],
               }}
-              transition={{ duration: 1.8 + i * 0.2, delay: ion.delay, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: route.dur, delay: route.delay, repeat: Infinity, ease: "easeInOut" }}
             />
-            {i < 4 && (
-              <motion.text fontSize={5.5} fill="#b45309" fontWeight="700"
-                initial={{ x: ion.cx + 4, y: ion.baseY - 4, opacity: 0 }}
+            {/* Core particle */}
+            <motion.circle
+              r={route.r} fill="#d97706"
+              initial={{ cx: route.kx[0], cy: route.ky[0], opacity: 0 }}
+              animate={{
+                cx: route.kx,
+                cy: route.ky,
+                opacity: [0, 1, 1, 1, 0],
+              }}
+              transition={{ duration: route.dur, delay: route.delay, repeat: Infinity, ease: "easeInOut" }}
+            />
+            {/* Cu²⁺ label on every other particle */}
+            {i % 2 === 0 && (
+              <motion.text fontSize={6.5} fill="#b45309" fontWeight="800"
+                initial={{ x: route.kx[0] + 6, y: route.ky[0] - 6, opacity: 0 }}
                 animate={{
-                  x: [ion.cx + 4, ion.cx + 22, ion.cx + 12],
-                  y: [ion.baseY - 4, ion.baseY - 22, ion.baseY - 4],
-                  opacity: [0, 0.9, 0],
+                  x: route.kx.map(x => x + 6),
+                  y: route.ky.map(y => y - 6),
+                  opacity: [0, 0, 0.9, 0.9, 0],
                 }}
-                transition={{ duration: 1.8 + i * 0.2, delay: ion.delay, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: route.dur, delay: route.delay, repeat: Infinity, ease: "easeInOut" }}
               >Cu²⁺</motion.text>
             )}
+            {/* Arrival splash at cathode */}
+            <motion.circle
+              cx={route.kx[4]} cy={route.ky[4]}
+              r={2} fill="#92400e"
+              initial={{ r: 2, fillOpacity: 0 }}
+              animate={{
+                r:           [2,  2,  2,  10, 16],
+                fillOpacity: [0,  0,  0, 0.55, 0],
+              }}
+              transition={{ duration: route.dur, delay: route.delay, repeat: Infinity, ease: "easeOut" }}
+            />
           </motion.g>
         ))}
 
-        {/* SO₄²⁻ ions moving TOWARD anode (left) when running */}
+        {/* ── SO₄²⁻ ions drifting toward anode (left) ── */}
         {running && SULFATE_IONS.map((ion, i) => (
           <motion.g key={`so${i}`}>
-            <motion.circle r={3} fill="#818cf8" fillOpacity={0.8}
+            <motion.circle r={3} fill="#818cf8" fillOpacity={0}
               initial={{ cx: ion.cx, cy: ion.baseY }}
               animate={{
-                cx: [ion.cx, ion.cx - 16, ion.cx - 6],
-                cy: [ion.baseY, ion.baseY - 14, ion.baseY],
+                cx: [ion.cx, ion.cx - 22, ion.cx - 10],
+                cy: [ion.baseY, ion.baseY - 12, ion.baseY],
+                fillOpacity: [0, 0.75, 0],
               }}
-              transition={{ duration: 2 + i * 0.18, delay: ion.delay, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 2.1 + i * 0.18, delay: ion.delay, repeat: Infinity, ease: "easeInOut" }}
             />
             {i < 3 && (
-              <motion.text fontSize={5} fill="#6366f1" fontWeight="700"
-                initial={{ x: ion.cx - 2, y: ion.baseY - 4, opacity: 0 }}
+              <motion.text fontSize={5.5} fill="#6366f1" fontWeight="700"
                 animate={{
-                  x: [ion.cx - 2, ion.cx - 18, ion.cx - 8],
-                  y: [ion.baseY - 4, ion.baseY - 18, ion.baseY - 4],
+                  x: [ion.cx - 2, ion.cx - 24, ion.cx - 12],
+                  y: [ion.baseY - 4, ion.baseY - 16, ion.baseY - 4],
                   opacity: [0, 0.85, 0],
                 }}
-                transition={{ duration: 2 + i * 0.18, delay: ion.delay, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: 2.1 + i * 0.18, delay: ion.delay, repeat: Infinity, ease: "easeInOut" }}
               >SO₄²⁻</motion.text>
             )}
           </motion.g>
         ))}
       </g>
 
-      {/* ── Anode (left, dissolves) ── */}
-      <motion.rect
-        x={132 - anodeWidth / 2} y={105}
-        width={anodeWidth} height={240} rx={3}
+      {/* ── Anode (left, physically erodes) ── */}
+      {/* Shadow / depth behind the rod */}
+      <rect x={124} y={105} width={14} height={240} rx={3}
+        fill="#7c2d12" fillOpacity={0.18} />
+      {/* The rod itself — right face develops organic pits */}
+      <path
+        d={buildAnodePath(132, 105, 240, timeElapsed)}
         fill="url(#mainElCopper)" stroke="#92400e" strokeWidth="1.2"
-        animate={{ width: anodeWidth, x: 132 - anodeWidth / 2 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
       />
-      <GlassSheen x={122} y={105} w={18} h={80} rx={2} />
+      {/* Erosion highlight: emphasise the jagged right edge with a warm glow */}
+      {timeElapsed > 0.05 && (
+        <path
+          d={buildAnodePath(132, 192, 153, timeElapsed)}
+          fill="none" stroke="#f59e0b"
+          strokeWidth={1.5} strokeOpacity={Math.min(1, timeElapsed * 2)}
+        />
+      )}
+      <GlassSheen x={122} y={105} w={14} h={80} rx={2} />
 
-      {/* Anode dissolving particles */}
-      {running && timeElapsed > 0.1 && [0, 1, 2].map(i => (
-        <motion.circle key={`ap${i}`} cx={118 + i * 5} r={2} fill="#d97706" fillOpacity={0}
+      {/* ── Detaching fragments: small copper chips visibly popping off ── */}
+      {running && ANODE_FRAGMENTS.map((frag, i) => (
+        <motion.circle key={`frag${i}`}
+          r={frag.r} fill="#d97706"
+          initial={{ cx: frag.sx, cy: frag.sy, opacity: 0 }}
           animate={{
-            cy: [165 + i * 20, 185 + i * 20],
-            cx: [118 + i * 5, 110 + i * 3],
-            fillOpacity: [0, 0.7, 0],
+            cx: [frag.sx, frag.sx + 6,  frag.sx + 14, frag.sx + 22],
+            cy: [frag.sy, frag.sy - 6,  frag.sy + 4,  frag.sy - 2],
+            opacity: [0, 1, 0.7, 0],
           }}
-          transition={{ duration: 1.2, delay: i * 0.5, repeat: Infinity, ease: "easeOut" }}
+          transition={{ duration: frag.dur, delay: frag.delay, repeat: Infinity, ease: "easeOut" }}
         />
       ))}
 
