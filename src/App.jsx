@@ -10,6 +10,7 @@ import AtomicStructureExperiment from "./pages/AtomicStructureExperiment";
 import PendulumExperiment from "./pages/PendulumExperiment";
 import PressureExperiment from "./pages/PressureExperiment";
 import CircuitExperiment from "./pages/CircuitExperiment";
+import RefractionExperiment from "./pages/RefractionExperiment";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/experiment/pendulum" element={<PendulumExperiment />} />
           <Route path="/experiment/pressure" element={<PressureExperiment />} />
           <Route path="/experiment/circuits" element={<CircuitExperiment />} />
+          <Route path="/experiment/refraction" element={<RefractionExperiment />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>

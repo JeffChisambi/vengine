@@ -72,6 +72,17 @@ const ALL_EXPERIMENTS = [
     available: true,
   },
   {
+    title: "Refraction Through Glass",
+    description: "Fire a laser at a glass block and watch it bend. Measure θ₁ and θ₂, verify Snell's Law, and explore 5 different optical materials.",
+    icon: Zap,
+    path: "/experiment/refraction",
+    accentColor: "#0369a1",
+    accentBg: "from-sky-400 to-cyan-500",
+    subject: "Physics",
+    difficulty: "Medium",
+    available: true,
+  },
+  {
     title: "Wave Properties",
     description: "Visualize transverse and longitudinal waves; control frequency and amplitude.",
     icon: Waves,
