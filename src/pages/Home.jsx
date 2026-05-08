@@ -140,6 +140,17 @@ const ALL_EXPERIMENTS = [
     available: true,
   },
   {
+    title: "Electrolysis of Copper Sulfate",
+    description: "Pass DC current through copper sulfate solution. Watch Cu²⁺ ions migrate to the cathode and deposit as copper metal, while the anode dissolves — revealing the chemistry behind electroplating and copper purification.",
+    icon: Zap,
+    path: "/experiment/electrolysis",
+    accentColor: "#0891b2",
+    accentBg: "from-cyan-500 to-sky-600",
+    subject: "Chemistry",
+    difficulty: "Medium",
+    available: true,
+  },
+  {
     title: "Exothermic Reactions",
     description: "Measure temperature changes during chemical reactions in a virtual calorimeter.",
     icon: Flame,

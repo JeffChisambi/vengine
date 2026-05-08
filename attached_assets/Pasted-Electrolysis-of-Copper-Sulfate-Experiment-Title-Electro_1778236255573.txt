@@ -1,0 +1,83 @@
+Electrolysis of Copper Sulfate Experiment
+Title
+Electrolysis of Copper Sulfate Solution
+Aim
+To investigate the electrolysis of copper sulfate solution using copper electrodes and observe the products formed at the electrodes.
+Apparatus and Materials
+•	Beaker
+•	Copper sulfate solution
+•	Two copper electrodes
+•	Battery or DC power supply
+•	Connecting wires with crocodile clips
+•	Ammeter 
+•	Switch
+•	Retort stand (optional)
+Chemical Used
+•	Copper sulfate solution (CuSO₄)
+Theory
+Electrolysis is the chemical decomposition of an ionic compound in molten or aqueous form by passing electric current through it.
+Copper sulfate solution contains:
+•	Copper ions (Cu²⁺)
+•	Sulfate ions (SO₄²⁻)
+When electric current passes through the solution:
+•	Positive copper ions move to the cathode (negative electrode)
+•	Negative sulfate ions move to the anode (positive electrode)
+Using copper electrodes:
+•	Copper is deposited at the cathode
+•	Copper dissolves from the anode into the solution
+Setup Diagram
+A beaker containing copper sulfate solution with two copper electrodes connected to a DC power supply.
+Procedure
+1.	Pour copper sulfate solution into a beaker.
+2.	Insert two clean copper electrodes into the solution.
+3.	Connect the electrodes to a DC power supply:
+o	Positive terminal to the anode
+o	Negative terminal to the cathode
+4.	Switch on the current and allow electrolysis to proceed for several minutes.
+5.	Observe changes at both electrodes.
+6.	Record all observations.
+Observations
+•	A reddish-brown deposit forms on the cathode.
+•	The anode gradually becomes smaller.
+•	The blue color of the solution remains almost unchanged.
+Explanation of Observations
+At the Cathode (Negative Electrode)
+Copper ions gain electrons and are deposited as copper metal.
+genui{"math_block_widget_always_prefetch_v2":{"content":"Cu^{2+} + 2e^- \rightarrow Cu"}}
+At the Anode (Positive Electrode)
+Copper atoms lose electrons and dissolve into the solution.
+genui{"math_block_widget_always_prefetch_v2":{"content":"Cu \rightarrow Cu^{2+} + 2e^-"}}
+Overall Effect
+•	Copper is transferred from the anode to the cathode.
+•	Concentration of copper sulfate solution remains nearly constant.
+Conclusion
+During electrolysis of copper sulfate using copper electrodes:
+•	Copper metal is deposited at the cathode.
+•	Copper dissolves at the anode.
+•	The mass of the cathode increases while the mass of the anode decreases.
+Precautions
+1.	Use clean copper electrodes.
+2.	Ensure electrodes do not touch each other.
+3.	Use a low DC voltage.
+4.	Handle electrical equipment carefully.
+5.	Avoid spilling copper sulfate solution.
+Applications of Electrolysis of Copper Sulfate
+1.	Electroplating
+2.	Purification of copper
+3.	Extraction of metals
+4.	Industrial electrolysis processes
+Viva Questions
+1.	What is electrolysis?
+2.	Why are copper electrodes used?
+3.	What happens at the cathode?
+4.	What happens at the anode?
+5.	Why does the blue color remain unchanged?
+6.	Which electrode gains mass?
+7.	Which electrode loses mass?
+Expected Exam Questions
+1.	Describe the electrolysis of copper sulfate using copper electrodes.
+2.	Write ionic equations for reactions at both electrodes.
+3.	State observations made during the experiment.
+4.	Explain why the concentration of the solution remains constant.
+5.	Mention applications of electrolysis.
+

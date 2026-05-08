@@ -16,6 +16,7 @@ import LensExperiment from "./pages/LensExperiment";
 import StarchExperiment from "./pages/StarchExperiment";
 import PhotosynthesisExperiment from "./pages/PhotosynthesisExperiment";
 import TitrationExperiment from "./pages/TitrationExperiment";
+import ElectrolysisExperiment from "./pages/ElectrolysisExperiment";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/experiment/starch" element={<StarchExperiment />} />
           <Route path="/experiment/photosynthesis" element={<PhotosynthesisExperiment />} />
           <Route path="/experiment/titration" element={<TitrationExperiment />} />
+          <Route path="/experiment/electrolysis" element={<ElectrolysisExperiment />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
