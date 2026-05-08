@@ -1,0 +1,174 @@
+Experiment Title
+Soil Texture Test
+Learning Objective
+Enable students to determine soil texture by observing how soil particles settle in water according to particle size and density.
+1. Overview of the Virtual Experiment
+The learner performs a simulated soil texture analysis using a virtual transparent jar filled with soil and water. The experiment visually demonstrates sedimentation and separation into layers:
+	Sand → settles first 
+	Silt → settles second 
+	Clay → settles last 
+Students can:
+	Select different soil samples 
+	Shake the jar 
+	Watch settling over time 
+	Measure layer thicknesses 
+	Identify soil texture type 
+________________________________________
+2. Virtual Lab Interface Design
+Main Screen Layout
+Left Panel — Controls
+	Soil sample selector 
+	Sandy soil 
+	Clay soil 
+	Loamy soil 
+	Silty soil 
+	Buttons: 
+	Add Water 
+	Shake Jar 
+	Start Settling 
+	Pause 
+	Reset 
+Center Panel — Simulation Area
+Large animated transparent jar showing:
+	Water 
+	Floating particles 
+	Settling process 
+	Layer formation 
+Right Panel — Data & Observations
+Displays:
+	Sand percentage 
+	Silt percentage 
+	Clay percentage 
+	Soil texture classification 
+	Observation notes 
+________________________________________
+3. Simulation Stages
+Stage 1 — Add Soil
+Student drags soil into the jar.
+Animation
+	Brown particles appear in the jar. 
+________________________________________
+Stage 2 — Add Water
+Student clicks “Add Water.”
+Animation
+	Water fills the jar. 
+	Soil becomes muddy. 
+________________________________________
+Stage 3 — Shake the Jar
+Student clicks “Shake.”
+Animation
+	Jar shakes vigorously. 
+	Particles mix completely. 
+Sound effect:
+	Swishing water sound 
+________________________________________
+Stage 4 — Settling Process
+Student clicks “Start Settling.”
+Time-Lapse Animation
+Particles settle at different speeds:
+Particle	Speed
+Sand	Fast
+Silt	Medium
+Clay	Slow
+Visual Effect
+Distinct layers appear:
+	Bottom → Sand 
+	Middle → Silt 
+	Top → Clay 
+Water becomes clearer with time.
+________________________________________
+4. Interactive Features
+A. Time Control
+Slider:
+	1 minute 
+	5 minutes 
+	30 minutes 
+	1 hour 
+	24 hours 
+Students observe gradual settling.
+________________________________________
+B. Layer Measurement Tool
+Virtual ruler measures:
+	Sand layer thickness 
+	Silt layer thickness 
+	Clay layer thickness 
+Automatic percentage calculation:
+"Percentage"="Layer Height" /"Total Height" ×100
+
+"Percentage"="Layer Height" /"Total Height" ×100
+________________________________________
+C. Soil Classification Engine
+Based on percentages:
+Texture Type	Characteristics
+Sandy	Mostly sand
+Clayey	Mostly clay
+Silty	Mostly silt
+Loamy	Balanced mixture
+System automatically identifies soil type.
+________________________________________
+5. Educational Features
+Guided Instructions
+On-screen prompts:
+	Add soil sample 
+	Add water 
+	Shake thoroughly 
+	Allow settling 
+	Observe layers 
+________________________________________
+Observation Table
+Layer	Observation
+Sand	Settles first
+Silt	Settles second
+Clay	Settles last
+________________________________________
+Quiz Mode
+Automatic questions:
+	Which particle settles fastest? 
+	Which soil retains more water? 
+	Why does clay settle last? 
+________________________________________
+6. Scientific Concepts Demonstrated
+Sedimentation
+Larger particles settle faster than smaller particles.
+Soil Texture
+Different soils contain different proportions of:
+	Sand 
+	Silt 
+	Clay 
+Water Retention
+	Clay retains more water 
+	Sand drains faster 
+________________________________________
+7. Advanced Features (Optional)
+A. Real-Time Graph
+Graph of settling height vs time.
+B. Magnified Particle View
+Zoomed microscopic view:
+	Large sand grains 
+	Medium silt particles 
+	Tiny clay particles 
+C. Environmental Mode
+Simulate:
+	Rainfall effects 
+	Soil erosion 
+	Water absorption 
+________________________________________
+8. Assessment Component
+Virtual Lab Report
+Students complete:
+	Aim 
+	Procedure 
+	Observations 
+	Conclusion 
+________________________________________
+9. Expected Learning Outcomes
+Students should be able to:
+	Describe soil texture testing 
+	Identify sand, silt, and clay layers 
+	Explain sedimentation 
+	Classify soil types 
+	Interpret soil layer proportions 
+________________________________________
+11. Sample Conclusion in the Virtual Lab
+Different soil samples contain different proportions of sand, silt, and clay. Larger particles such as sand settle faster while smaller clay particles settle last.
+
