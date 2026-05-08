@@ -1,0 +1,104 @@
+Test for Starch in Leaves
+
+The success of this virtual experiment depends on making students visually understand that starch is stored food produced during photosynthesis — not just watching a color change.
+
+The experience should feel like:
+
+a real biology lab,
+an interactive discovery process,
+a microscopic chemical transformation,
+visually satisfying and memorable.
+Core Learning Goal
+
+Students should intuitively realize:
+
+“The leaf made starch, and iodine helps reveal it.”
+
+The simulation should connect:
+
+sunlight,
+photosynthesis,
+starch formation,
+chemical testing,
+visible evidence.
+Overall Visual Setup
+
+The virtual lab appears as a realistic animated biology workstation containing:
+
+fresh green leaves,
+test tubes,
+boiling water bath,
+ethanol container,
+forceps,
+iodine dropper,
+petri dishes,
+microscope/zoom controls,
+animated heating equipment.
+
+The workspace should feel alive:
+
+steam rises,
+liquids ripple,
+burners flicker,
+glass reflects light subtly.
+Step-by-Step Interactive Experience
+STEP 1 — Selecting the Leaf
+
+Students choose a leaf:
+
+healthy green leaf,
+partially covered leaf,
+pale leaf,
+dark-stored leaf.
+
+The leaf should appear highly detailed:
+
+visible veins,
+texture,
+realistic coloration.
+
+Hovering can show:
+
+chlorophyll regions,
+sunlight exposure zones.
+STEP 2 — Heating in Water
+
+Students drag the leaf into boiling water.
+
+Animation Details
+
+When heated:
+
+water bubbles actively,
+steam rises,
+leaf softens slightly,
+leaf color dulls a little.
+
+A microscopic zoom panel can show:
+
+cells slowing metabolic activity,
+proteins denaturing.
+
+The simulation explains:
+“Boiling stops chemical reactions in the leaf.”
+
+STEP 3 — Heating in Alcohol
+
+This is the MOST visually important step.
+
+Students place the leaf into ethanol inside a hot water bath.
+
+Key Visual Transformation
+
+The green chlorophyll gradually dissolves out of the leaf.
+
+Important animations:
+green pigment swirling into ethanol,
+leaf slowly turning pale/yellow-white,
+diffusion clouds spreading in liquid.
+
+This moment must feel visually magical.
+
+Students should think:
+
+“The green color is being removed!”

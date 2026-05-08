@@ -150,6 +150,17 @@ const ALL_EXPERIMENTS = [
     available: true,
   },
   {
+    title: "Test for Starch in Leaves",
+    description: "Boil, decolorise with ethanol, rinse, then apply iodine — watch starch reveal itself as deep blue-black wherever photosynthesis occurred.",
+    icon: Leaf,
+    path: "/experiment/starch",
+    accentColor: "#15803d",
+    accentBg: "from-green-600 to-teal-700",
+    subject: "Biology",
+    difficulty: "Easy",
+    available: true,
+  },
+  {
     title: "Plant Growth Factors",
     description: "Investigate how light, water, and soil nutrients affect plant growth rates.",
     icon: Leaf,

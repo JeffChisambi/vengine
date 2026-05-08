@@ -1,0 +1,139 @@
+Core Learning Goal
+
+Students should intuitively realize:
+
+“The leaf made starch, and iodine helps reveal it.”
+
+The simulation should connect:
+
+sunlight,
+photosynthesis,
+starch formation,
+chemical testing,
+visible evidence.
+Overall Visual Setup
+
+The virtual lab appears as a realistic animated biology workstation containing:
+
+fresh green leaves,
+test tubes,
+boiling water bath,
+ethanol container,
+forceps,
+iodine dropper,
+petri dishes,
+microscope/zoom controls,
+animated heating equipment.
+
+The workspace should feel alive:
+
+steam rises,
+liquids ripple,
+burners flicker,
+glass reflects light subtly.
+Step-by-Step Interactive Experience
+STEP 1 — Selecting the Leaf
+
+Students choose a leaf:
+
+healthy green leaf,
+partially covered leaf,
+pale leaf,
+dark-stored leaf.
+
+The leaf should appear highly detailed:
+
+visible veins,
+texture,
+realistic coloration.
+
+Hovering can show:
+
+chlorophyll regions,
+sunlight exposure zones.
+STEP 2 — Heating in Water
+
+Students drag the leaf into boiling water.
+
+Animation Details
+
+When heated:
+
+water bubbles actively,
+steam rises,
+leaf softens slightly,
+leaf color dulls a little.
+
+A microscopic zoom panel can show:
+
+cells slowing metabolic activity,
+proteins denaturing.
+
+The simulation explains:
+“Boiling stops chemical reactions in the leaf.”
+
+STEP 3 — Heating in Alcohol
+
+This is the MOST visually important step.
+
+Students place the leaf into ethanol inside a hot water bath.
+
+Key Visual Transformation
+
+The green chlorophyll gradually dissolves out of the leaf.
+
+Important animations:
+green pigment swirling into ethanol,
+leaf slowly turning pale/yellow-white,
+diffusion clouds spreading in liquid.
+
+This moment must feel visually magical.
+
+Students should think:
+
+“The green color is being removed!”
+
+Why This Matters
+
+Many students memorize:
+“remove chlorophyll”
+
+without understanding WHY.
+
+The simulation should visually show:
+
+chlorophyll masks starch test results,
+removing green pigment reveals the iodine reaction clearly.
+STEP 4 — Rinsing the Leaf
+
+Students rinse the brittle leaf in warm water.
+
+Animation
+leaf softens again,
+texture becomes flexible,
+water droplets appear realistically.
+
+This step helps students understand preparation, not just procedure.
+
+STEP 5 — Adding Iodine Solution
+
+This is the emotional payoff moment.
+
+Students use a dropper to place iodine onto the leaf.
+
+Critical Visual Effect
+
+Where starch exists:
+
+iodine spreads,
+the leaf rapidly changes from brown/yellow to deep blue-black.
+
+The transition should:
+
+animate smoothly,
+spread organically through leaf tissues,
+feel chemically reactive.
+
+If no starch exists:
+
+no blue-black appears.
