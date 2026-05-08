@@ -23,6 +23,7 @@ import {
   Globe,
   Menu,
   X,
+  Sun,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -147,6 +148,17 @@ const ALL_EXPERIMENTS = [
     accentBg: "from-green-500 to-emerald-700",
     subject: "Biology",
     difficulty: "Hard",
+    available: true,
+  },
+  {
+    title: "Photosynthesis & Starch Production",
+    description: "Destarch two plants, expose one to light and one to darkness, then run the full iodine test on both. Watch the side-by-side payoff reveal which leaf made starch — and why.",
+    icon: Sun,
+    path: "/experiment/photosynthesis",
+    accentColor: "#15803d",
+    accentBg: "from-emerald-500 to-green-700",
+    subject: "Biology",
+    difficulty: "Medium",
     available: true,
   },
   {
