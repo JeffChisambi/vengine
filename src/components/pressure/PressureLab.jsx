@@ -257,7 +257,7 @@ export default function PressureLab({ readings, setReadings }) {
 
       <div className="flex flex-col lg:flex-row gap-6 w-full items-start justify-center">
         {/* ── SVG Tank ── */}
-        <div className="rounded-2xl border border-border bg-card shadow-lg overflow-hidden select-none">
+        <div className="rounded-2xl border border-border bg-card shadow-lg overflow-hidden select-none w-full">
           <svg
             ref={svgRef}
             width={SVG_W}
@@ -613,7 +613,7 @@ export default function PressureLab({ readings, setReadings }) {
         </div>
 
         {/* ── Controls ── */}
-        <div className="flex flex-col gap-4 w-full max-w-[240px]">
+        <div className="flex flex-col gap-4 w-full sm:max-w-[240px]">
           {/* Liquid selector */}
           <div className="p-4 rounded-2xl bg-card border border-border">
             <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">

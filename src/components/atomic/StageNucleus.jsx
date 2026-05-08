@@ -122,7 +122,7 @@ export default function StageNucleus({ onNext }) {
         </div>
 
         {/* Controls */}
-        <div className="flex flex-col gap-4 min-w-[200px] w-full max-w-[220px]">
+        <div className="flex flex-col gap-4 w-full sm:max-w-[220px]">
           <Button onClick={fire} disabled={animating} className="bg-sky-600 hover:bg-sky-500 text-white border-0 rounded-xl text-sm">
             ⚡ Fire Particles
           </Button>

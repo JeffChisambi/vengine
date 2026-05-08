@@ -162,8 +162,8 @@ export default function PendulumLab({ readings, setReadings, onNext }) {
 
       <div className="flex flex-col lg:flex-row gap-6 w-full items-start justify-center">
         {/* ── SVG Pendulum ── */}
-        <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-lg relative select-none">
-          <svg width={SVG_W} height={SVG_H} viewBox={`0 0 ${SVG_W} ${SVG_H}`}>
+        <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-lg relative select-none w-full">
+          <svg width={SVG_W} height={SVG_H} viewBox={`0 0 ${SVG_W} ${SVG_H}`} className="max-w-full w-full" style={{ display: "block" }}>
             <defs>
               <radialGradient id="lab-bob" cx="35%" cy="35%">
                 <stop offset="0%" stopColor="#a5b4fc" />
@@ -338,7 +338,7 @@ export default function PendulumLab({ readings, setReadings, onNext }) {
         </div>
 
         {/* ── Controls Panel ── */}
-        <div className="flex flex-col gap-4 w-full max-w-[260px]">
+        <div className="flex flex-col gap-4 w-full sm:max-w-[260px]">
           {/* Length slider */}
           <div className="p-4 rounded-2xl bg-card border border-border">
             <div className="flex items-center justify-between mb-3">

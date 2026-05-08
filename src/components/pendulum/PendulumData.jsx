@@ -209,7 +209,8 @@ export default function PendulumData({ readings, setReadings }) {
       {/* Data table */}
       {readings.length > 0 ? (
         <div className="w-full rounded-2xl border border-border bg-card overflow-hidden shadow-sm">
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto">
+          <table className="w-full text-sm min-w-[500px]">
             <thead>
               <tr className="bg-muted/50 text-xs font-bold text-muted-foreground uppercase tracking-wider">
                 <th className="px-4 py-3 text-left">#</th>
@@ -276,6 +277,7 @@ export default function PendulumData({ readings, setReadings }) {
               })}
             </tbody>
           </table>
+          </div>
         </div>
       ) : (
         <div className="w-full p-8 rounded-2xl border border-dashed border-border text-center text-muted-foreground text-sm">

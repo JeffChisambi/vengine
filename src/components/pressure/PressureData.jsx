@@ -178,7 +178,8 @@ export default function PressureData({ readings, setReadings }) {
       {/* Table */}
       {readings.length > 0 && (
         <div className="w-full rounded-2xl border border-border bg-card overflow-hidden shadow-sm">
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto">
+          <table className="w-full text-sm min-w-[520px]">
             <thead>
               <tr className="bg-muted/50 text-xs font-bold text-muted-foreground uppercase tracking-wider">
                 <th className="px-3 py-3 text-left">#</th>
@@ -262,6 +263,7 @@ export default function PressureData({ readings, setReadings }) {
               })}
             </tbody>
           </table>
+          </div>
         </div>
       )}
 

@@ -133,7 +133,7 @@ export default function StageObservations({ onNext }) {
         </div>
 
         {/* Controls + Stats */}
-        <div className="flex flex-col gap-3 min-w-[200px] w-full max-w-[220px]">
+        <div className="flex flex-col gap-3 w-full sm:max-w-[220px]">
           <div className="flex gap-2">
             <Button onClick={launch} disabled={running} className="flex-1 bg-sky-600 hover:bg-sky-500 text-white border-0 text-xs gap-1.5">
               <Play className="w-3.5 h-3.5" /> {running ? "Firing…" : "Fire Burst"}

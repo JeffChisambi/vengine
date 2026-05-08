@@ -380,7 +380,7 @@ export default function CircuitLab({ readings, setReadings, onNext }) {
         </div>
 
         {/* Controls panel */}
-        <div className="flex flex-col gap-4 w-full max-w-[270px] shrink-0">
+        <div className="flex flex-col gap-4 w-full lg:max-w-[270px] shrink-0">
 
           {/* Voltage */}
           <div className="p-4 rounded-2xl bg-card border border-border">
