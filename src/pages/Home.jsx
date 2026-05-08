@@ -83,6 +83,17 @@ const ALL_EXPERIMENTS = [
     available: true,
   },
   {
+    title: "Thermal Expansion",
+    description: "Heat iron, copper, and aluminum rods and watch atoms vibrate and the metal expand. Measure ΔL at different temperatures and verify ΔL = αL₀ΔT.",
+    icon: Flame,
+    path: "/experiment/thermal",
+    accentColor: "#c2410c",
+    accentBg: "from-orange-500 to-red-500",
+    subject: "Physics",
+    difficulty: "Easy",
+    available: true,
+  },
+  {
     title: "Wave Properties",
     description: "Visualize transverse and longitudinal waves; control frequency and amplitude.",
     icon: Waves,
