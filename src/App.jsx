@@ -12,6 +12,7 @@ import PressureExperiment from "./pages/PressureExperiment";
 import CircuitExperiment from "./pages/CircuitExperiment";
 import RefractionExperiment from "./pages/RefractionExperiment";
 import ThermalExperiment from "./pages/ThermalExperiment";
+import LensExperiment from "./pages/LensExperiment";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/experiment/circuits" element={<CircuitExperiment />} />
           <Route path="/experiment/refraction" element={<RefractionExperiment />} />
           <Route path="/experiment/thermal" element={<ThermalExperiment />} />
+          <Route path="/experiment/lens" element={<LensExperiment />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>

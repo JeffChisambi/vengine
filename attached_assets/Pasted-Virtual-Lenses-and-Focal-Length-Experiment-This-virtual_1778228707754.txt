@@ -1,0 +1,209 @@
+Virtual Lenses and Focal Length Experiment
+This virtual experiment helps students understand how lenses bend light and form images, while intuitively discovering the meaning of focal length.
+The simulation presents an interactive optical bench with:
+
+
+a movable object,
+
+
+a convex or concave lens,
+
+
+animated light rays,
+
+
+a screen for image formation.
+
+
+Students can freely move components and instantly observe how images change.
+
+Main Visual Experience
+At the center is a realistic transparent lens with glowing animated rays passing through it.
+The interface shows:
+
+
+object on one side,
+
+
+lens in the middle,
+
+
+image or screen on the other side.
+
+
+As students move the object:
+
+
+rays bend dynamically,
+
+
+the image shifts position,
+
+
+image size changes smoothly,
+
+
+focus updates in real time.
+
+
+
+Core Interactive Features
+Students can:
+
+
+drag the object closer or farther,
+
+
+switch between convex and concave lenses,
+
+
+move the screen,
+
+
+adjust focal length,
+
+
+change lens curvature,
+
+
+toggle principal rays,
+
+
+enable slow-motion light mode.
+
+
+
+Animated Ray Behavior
+The rays should visibly:
+
+
+bend through the lens,
+
+
+converge or diverge,
+
+
+form real or virtual images.
+
+
+Important rays are highlighted:
+
+
+parallel ray,
+
+
+central ray,
+
+
+focal ray.
+
+
+Their paths animate smoothly using SVG lines and glowing trajectories.
+
+Understanding Focal Length
+The focal point is shown as a glowing marker on both sides of the lens.
+When parallel rays enter:
+
+
+they converge at the focal point for convex lenses,
+
+
+appear to diverge from the focal point for concave lenses.
+
+
+Students can directly see:
+
+
+stronger curvature → shorter focal length,
+
+
+flatter lens → longer focal length.
+
+
+
+Image Formation Visualization
+The image updates instantly as the object moves.
+Students observe:
+
+
+upright vs inverted images,
+
+
+magnified vs reduced images,
+
+
+real vs virtual images.
+
+
+Smooth transitions help students intuitively connect object distance with image behavior.
+
+Advanced Learning Features
+Optional features:
+
+
+split-screen ray and wave mode,
+
+
+zoomed microscopic view of refraction,
+
+
+focal length measurement tool,
+
+
+live lens formula calculations,
+
+
+challenge mode for predicting image position.
+
+
+
+Visual Style
+The experiment should feel like:
+
+
+a modern digital optics lab,
+
+
+elegant scientific visualization,
+
+
+highly interactive learning environment.
+
+
+Use:
+
+
+transparent glass effects,
+
+
+glowing rays,
+
+
+animated geometry,
+
+
+smooth motion,
+
+
+clean scientific UI.
+
+
+
+Educational Goal
+Students should finish the experiment able to visually understand:
+
+
+how lenses bend light,
+
+
+how focal length affects image formation,
+
+
+why image properties change with distance.
+
+
+The key outcome is:
+
+“I can SEE how the lens forms the image.”
+
+rather than simply memorizing ray diagrams or formulas.
