@@ -129,6 +129,17 @@ const ALL_EXPERIMENTS = [
     available: true,
   },
   {
+    title: "Acid–Base Titration",
+    description: "Discover an unknown HCl concentration by dripping NaOH from a burette. Watch the flask turn pink at the precise endpoint, trace the S-shaped pH curve live, and calculate concentration from your own data.",
+    icon: FlaskConical,
+    path: "/experiment/titration",
+    accentColor: "#0e7490",
+    accentBg: "from-cyan-500 to-sky-700",
+    subject: "Chemistry",
+    difficulty: "Medium",
+    available: true,
+  },
+  {
     title: "Exothermic Reactions",
     description: "Measure temperature changes during chemical reactions in a virtual calorimeter.",
     icon: Flame,
