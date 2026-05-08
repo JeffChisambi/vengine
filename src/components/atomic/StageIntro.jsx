@@ -20,20 +20,20 @@ function AtomDiagram() {
           <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
       </defs>
-      {/* Orbit rings */}
-      <ellipse cx={CX} cy={CY} rx={ATOM_R} ry={ATOM_R * 0.35} fill="none" stroke="#22d3ee" strokeOpacity="0.15" strokeWidth="1" />
-      <ellipse cx={CX} cy={CY} rx={ATOM_R} ry={ATOM_R * 0.35} fill="none" stroke="#22d3ee" strokeOpacity="0.15" strokeWidth="1" transform={`rotate(60 ${CX} ${CY})`} />
-      <ellipse cx={CX} cy={CY} rx={ATOM_R} ry={ATOM_R * 0.35} fill="none" stroke="#22d3ee" strokeOpacity="0.15" strokeWidth="1" transform={`rotate(120 ${CX} ${CY})`} />
-      {/* Nucleus */}
+      {/* Orbit rings — brand green */}
+      <ellipse cx={CX} cy={CY} rx={ATOM_R} ry={ATOM_R * 0.35} fill="none" stroke="#4ade80" strokeOpacity="0.2" strokeWidth="1" />
+      <ellipse cx={CX} cy={CY} rx={ATOM_R} ry={ATOM_R * 0.35} fill="none" stroke="#4ade80" strokeOpacity="0.2" strokeWidth="1" transform={`rotate(60 ${CX} ${CY})`} />
+      <ellipse cx={CX} cy={CY} rx={ATOM_R} ry={ATOM_R * 0.35} fill="none" stroke="#4ade80" strokeOpacity="0.2" strokeWidth="1" transform={`rotate(120 ${CX} ${CY})`} />
+      {/* Nucleus — amber accent */}
       <circle cx={CX} cy={CY} r={18} fill="url(#nucleus-grad)" filter="url(#intro-glow)" />
-      {/* Electrons */}
+      {/* Electrons — brand green */}
       {electrons.map((e, i) => (
         <motion.circle
-          key={i}
-          cx={e.x} cy={e.y} r={5}
-          fill="#22d3ee"
-          filter="url(#intro-glow)"
-          animate={{ cx: [e.x, CX + ATOM_R * Math.cos((i / 8) * Math.PI * 2 + 0.3), e.x], cy: [e.y, CY + ATOM_R * Math.sin((i / 8) * Math.PI * 2 + 0.3), e.y] }}
+          key={i} cx={e.x} cy={e.y} r={5} fill="#4ade80" filter="url(#intro-glow)"
+          animate={{
+            cx: [e.x, CX + ATOM_R * Math.cos((i / 8) * Math.PI * 2 + 0.3), e.x],
+            cy: [e.y, CY + ATOM_R * Math.sin((i / 8) * Math.PI * 2 + 0.3), e.y],
+          }}
           transition={{ duration: 3 + i * 0.3, repeat: Infinity, ease: "linear" }}
         />
       ))}
@@ -51,8 +51,8 @@ export default function StageIntro({ onNext }) {
         transition={{ duration: 0.5 }}
         className="text-center"
       >
-        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-semibold mb-4 border border-cyan-500/20">
-          🔬 Historical Physics
+        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 text-green-400 text-xs font-semibold mb-4 border border-green-500/20">
+          🔬 Historical Chemistry
         </span>
         <h2 className="text-3xl sm:text-4xl font-extrabold font-heading mb-3 text-white">
           Rutherford's<br />Gold Foil Experiment
@@ -78,8 +78,8 @@ export default function StageIntro({ onNext }) {
         className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full"
       >
         {[
-          { icon: "⚡", title: "Alpha Particles", desc: "High-energy helium nuclei fired at thin gold foil" },
-          { icon: "🥇", title: "Gold Foil", desc: "Only 0.00004 cm thick — a few atoms across" },
+          { icon: "⚡", title: "Alpha Particles",   desc: "High-energy helium nuclei fired at thin gold foil" },
+          { icon: "🥇", title: "Gold Foil",          desc: "Only 0.00004 cm thick — a few atoms across" },
           { icon: "✨", title: "Zinc Sulfide Screen", desc: "Glows where particles strike, revealing their paths" },
         ].map((item, i) => (
           <motion.div
@@ -87,7 +87,7 @@ export default function StageIntro({ onNext }) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 + i * 0.1 }}
-            className="rounded-xl border border-white/8 bg-white/4 p-4"
+            className="rounded-xl border border-green-500/15 bg-green-500/5 p-4"
           >
             <div className="text-2xl mb-2">{item.icon}</div>
             <p className="text-xs font-bold text-white/80 font-heading mb-1">{item.title}</p>
@@ -102,7 +102,7 @@ export default function StageIntro({ onNext }) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
           onClick={onNext}
-          className="px-6 py-2.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-400 text-sm font-semibold border border-cyan-500/20 transition-colors"
+          className="px-6 py-2.5 rounded-xl bg-green-600 hover:bg-green-500 text-white text-sm font-semibold transition-colors shadow-lg shadow-green-900/40"
         >
           Begin the Journey →
         </motion.button>
