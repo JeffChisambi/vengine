@@ -11,12 +11,12 @@ import {
   Activity,
   Lock,
   ChevronRight,
-  BookOpen,
+  Play,
   ArrowRight,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-/* ─── Experiment data ─────────────────────────────────────────────── */
+/* ─── Data ───────────────────────────────────────────────────────────── */
 const GROUPS = [
   {
     label: "Physics",
@@ -24,7 +24,7 @@ const GROUPS = [
     color: "text-primary",
     bg: "bg-primary/10",
     border: "border-primary/20",
-    dot: "bg-primary",
+    subjectColor: "#2d7d52",
     experiments: [
       {
         title: "Simple Pendulum",
@@ -33,7 +33,6 @@ const GROUPS = [
         path: "/experiment/pendulum",
         accentColor: "#2d7d52",
         accentBg: "from-emerald-600 to-teal-700",
-        tag: "Physics",
         difficulty: "Easy",
         available: true,
       },
@@ -44,7 +43,6 @@ const GROUPS = [
         path: "/experiment/density",
         accentColor: "#1e6b4a",
         accentBg: "from-green-700 to-emerald-800",
-        tag: "Physics",
         difficulty: "Easy",
         available: true,
       },
@@ -55,7 +53,6 @@ const GROUPS = [
         path: "/experiment/pressure",
         accentColor: "#1a6494",
         accentBg: "from-blue-600 to-cyan-700",
-        tag: "Physics",
         difficulty: "Easy",
         available: true,
       },
@@ -66,7 +63,6 @@ const GROUPS = [
         path: "#",
         accentColor: "#c27c1a",
         accentBg: "from-amber-500 to-orange-600",
-        tag: "Physics",
         difficulty: "Medium",
         available: false,
       },
@@ -77,7 +73,6 @@ const GROUPS = [
         path: "#",
         accentColor: "#7c3aed",
         accentBg: "from-violet-500 to-fuchsia-600",
-        tag: "Physics",
         difficulty: "Medium",
         available: false,
       },
@@ -89,7 +84,7 @@ const GROUPS = [
     color: "text-cyan-700",
     bg: "bg-cyan-500/10",
     border: "border-cyan-500/20",
-    dot: "bg-cyan-500",
+    subjectColor: "#0369a1",
     experiments: [
       {
         title: "Atomic Structure",
@@ -98,7 +93,6 @@ const GROUPS = [
         path: "/experiment/atomic-structure",
         accentColor: "#0369a1",
         accentBg: "from-cyan-600 to-blue-700",
-        tag: "Chemistry",
         difficulty: "Easy",
         available: true,
       },
@@ -109,7 +103,6 @@ const GROUPS = [
         path: "#",
         accentColor: "#be123c",
         accentBg: "from-red-500 to-pink-600",
-        tag: "Chemistry",
         difficulty: "Medium",
         available: false,
       },
@@ -121,7 +114,7 @@ const GROUPS = [
     color: "text-emerald-700",
     bg: "bg-emerald-500/10",
     border: "border-emerald-500/20",
-    dot: "bg-emerald-500",
+    subjectColor: "#166534",
     experiments: [
       {
         title: "Cell Division",
@@ -130,7 +123,6 @@ const GROUPS = [
         path: "/experiment/cell-division",
         accentColor: "#166534",
         accentBg: "from-green-600 to-emerald-700",
-        tag: "Biology",
         difficulty: "Hard",
         available: true,
       },
@@ -142,7 +134,7 @@ const GROUPS = [
     color: "text-lime-700",
     bg: "bg-lime-500/10",
     border: "border-lime-500/20",
-    dot: "bg-lime-500",
+    subjectColor: "#3f6212",
     experiments: [
       {
         title: "Plant Growth Factors",
@@ -151,7 +143,6 @@ const GROUPS = [
         path: "#",
         accentColor: "#3f6212",
         accentBg: "from-lime-600 to-green-700",
-        tag: "Agriculture",
         difficulty: "Easy",
         available: false,
       },
@@ -165,21 +156,29 @@ const availableCount = GROUPS.reduce(
   0
 );
 
-/* ─── Difficulty badge ──────────────────────────────────────────────── */
+/* ─── Subject avatar dots (like the CAMT+ card in the reference) ─────── */
+const SUBJECT_DOTS = [
+  { label: "P", color: "#2d7d52", title: "Physics" },
+  { label: "C", color: "#0369a1", title: "Chemistry" },
+  { label: "B", color: "#166534", title: "Biology" },
+  { label: "A", color: "#3f6212", title: "Agriculture" },
+];
+
+/* ─── Difficulty badge ────────────────────────────────────────────────── */
 function DifficultyBadge({ level }) {
   const map = {
-    Easy: "bg-emerald-50 text-emerald-700 border border-emerald-200",
-    Medium: "bg-amber-50 text-amber-700 border border-amber-200",
-    Hard: "bg-red-50 text-red-700 border border-red-200",
+    Easy: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    Medium: "bg-amber-50 text-amber-700 border-amber-200",
+    Hard: "bg-red-50 text-red-700 border-red-200",
   };
   return (
-    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${map[level]}`}>
+    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${map[level]}`}>
       {level}
     </span>
   );
 }
 
-/* ─── Single experiment card ─────────────────────────────────────────── */
+/* ─── Experiment card ─────────────────────────────────────────────────── */
 function ExpCard({ exp, index }) {
   const Icon = exp.icon;
   const isLocked = !exp.available;
@@ -189,21 +188,18 @@ function ExpCard({ exp, index }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.05 * index }}
-      className={`group relative flex flex-col rounded-2xl border bg-card overflow-hidden transition-all duration-300
-        ${isLocked
-          ? "border-border opacity-70 cursor-not-allowed"
-          : "border-border hover:border-primary/30 hover:shadow-lg hover:shadow-primary/8 hover:-translate-y-0.5 cursor-pointer"
-        }`}
+      className={`group relative flex flex-col rounded-2xl border bg-card overflow-hidden transition-all duration-300 ${
+        isLocked
+          ? "border-border opacity-65 cursor-not-allowed"
+          : "border-border hover:border-primary/30 hover:shadow-xl hover:shadow-primary/8 hover:-translate-y-1 cursor-pointer"
+      }`}
     >
-      {/* Top colour strip */}
-      <div className={`h-1.5 w-full bg-gradient-to-r ${exp.accentBg} ${isLocked ? "opacity-40" : ""}`} />
-
+      <div className={`h-1 w-full bg-gradient-to-r ${exp.accentBg} ${isLocked ? "opacity-40" : ""}`} />
       <div className="p-5 flex flex-col flex-1 gap-3">
-        {/* Header row */}
         <div className="flex items-start justify-between gap-2">
           <div
             className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{ backgroundColor: exp.accentColor + "18" }}
+            style={{ backgroundColor: exp.accentColor + "15" }}
           >
             <Icon className="w-5 h-5" style={{ color: exp.accentColor }} />
           </div>
@@ -216,21 +212,17 @@ function ExpCard({ exp, index }) {
             )}
           </div>
         </div>
-
-        {/* Text */}
         <div className="flex-1">
-          <h4 className="text-sm font-bold font-heading text-foreground mb-1 group-hover:text-primary transition-colors leading-snug">
+          <h4 className="text-sm font-bold font-heading text-foreground mb-1.5 group-hover:text-primary transition-colors leading-snug">
             {exp.title}
           </h4>
           <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
             {exp.description}
           </p>
         </div>
-
-        {/* Footer */}
         {!isLocked && (
-          <div className="flex items-center gap-1 text-xs font-semibold text-primary opacity-0 group-hover:opacity-100 transition-opacity pt-1 border-t border-border">
-            Start Experiment <ArrowRight className="w-3.5 h-3.5" />
+          <div className="flex items-center gap-1 text-xs font-semibold text-primary opacity-0 group-hover:opacity-100 transition-opacity pt-2 border-t border-border">
+            Open Lab <ArrowRight className="w-3.5 h-3.5" />
           </div>
         )}
       </div>
@@ -240,150 +232,209 @@ function ExpCard({ exp, index }) {
   return isLocked ? card : <Link to={exp.path}>{card}</Link>;
 }
 
-/* ─── Stats item ─────────────────────────────────────────────────────── */
-function Stat({ value, label }) {
-  return (
-    <div className="text-center">
-      <div className="text-2xl sm:text-3xl font-extrabold font-heading text-primary">{value}</div>
-      <div className="text-xs text-muted-foreground mt-0.5">{label}</div>
-    </div>
-  );
-}
-
-/* ─── Main page ──────────────────────────────────────────────────────── */
+/* ─── Main page ───────────────────────────────────────────────────────── */
 export default function Home() {
   return (
     <div className="min-h-screen bg-background font-body">
 
-      {/* ── Navbar ── */}
-      <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      {/* ── Navbar ─────────────────────────────────────────────────────── */}
+      <header className="sticky top-0 z-50 border-b border-border/60 bg-background/92 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center shadow-sm">
               <FlaskConical className="w-4 h-4 text-white" />
             </div>
-            <span className="font-bold font-heading text-foreground text-sm tracking-tight">
-              Virtual Science Lab
+            <span className="font-bold font-heading text-foreground text-sm">
+              VirtualSciLab
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+            <span className="hidden sm:inline-flex items-center gap-1.5 text-xs text-muted-foreground font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
               {availableCount} labs open
             </span>
             <a
               href="#experiments"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors shadow-sm"
             >
-              Browse Labs <ChevronRight className="w-3.5 h-3.5" />
+              Explore Labs <ChevronRight className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>
       </header>
 
-      {/* ── Hero ── */}
-      <section className="relative overflow-hidden border-b border-border">
-        {/* Background blobs */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5 pointer-events-none" />
-        <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -right-24 w-[400px] h-[400px] bg-accent/8 rounded-full blur-3xl pointer-events-none" />
+      {/* ── Hero ───────────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden" style={{ background: "hsl(160 30% 96%)" }}>
+        {/* Subtle radial tint */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 60% at 65% 50%, hsl(36 95% 54% / 0.06) 0%, transparent 70%), radial-gradient(ellipse 50% 70% at 10% 80%, hsl(160 63% 32% / 0.07) 0%, transparent 60%)",
+          }}
+        />
 
-        {/* Floating decorations */}
-        <motion.div
-          className="absolute top-20 right-[12%] hidden lg:block"
-          animate={{ y: [0, -12, 0], rotate: [0, 6, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <svg width="64" height="84" viewBox="0 0 64 84" fill="none">
-            <rect x="12" y="10" width="40" height="58" rx="5" stroke="hsl(160,63%,32%)" strokeWidth="2" strokeOpacity="0.25" fill="hsl(160,63%,32%)" fillOpacity="0.06" />
-            <rect x="14" y="42" width="36" height="24" rx="3" fill="hsl(36,95%,54%)" fillOpacity="0.18" />
-            <path d="M12 10 L7 5 M52 10 L57 5" stroke="hsl(160,63%,32%)" strokeWidth="2" strokeOpacity="0.25" strokeLinecap="round" />
-          </svg>
-        </motion.div>
-        <motion.div
-          className="absolute top-28 left-[10%] hidden lg:block"
-          animate={{ y: [0, 10, 0], rotate: [0, -4, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        >
-          <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-            <circle cx="26" cy="26" r="22" stroke="hsl(36,95%,54%)" strokeWidth="2" strokeOpacity="0.25" fill="hsl(36,95%,54%)" fillOpacity="0.06" />
-            <circle cx="26" cy="26" r="9" stroke="hsl(36,95%,54%)" strokeWidth="1.5" strokeOpacity="0.2" />
-            <circle cx="26" cy="26" r="3.5" fill="hsl(36,95%,54%)" fillOpacity="0.35" />
-          </svg>
-        </motion.div>
-        <motion.div
-          className="absolute bottom-16 left-[18%] hidden lg:block"
-          animate={{ y: [0, -8, 0] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        >
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <polygon points="20,4 36,32 4,32" stroke="hsl(160,63%,32%)" strokeWidth="1.5" strokeOpacity="0.2" fill="hsl(160,63%,32%)" fillOpacity="0.05" />
-          </svg>
-        </motion.div>
+        <div className="relative max-w-6xl mx-auto px-6 py-16 sm:py-20 lg:py-24">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-        <div className="relative max-w-6xl mx-auto px-4 pt-20 pb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-2xl mx-auto"
-          >
-            {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-6 border border-primary/20">
-              <FlaskConical className="w-3.5 h-3.5" />
-              Interactive Virtual Experiments
-            </div>
-
-            {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-heading tracking-tight text-foreground mb-5 leading-[1.1]">
-              Learn Science{" "}
-              <span className="relative">
-                <span className="relative z-10 bg-gradient-to-r from-primary to-emerald-500 bg-clip-text text-transparent">
-                  by Doing
+            {/* ── Left: Copy ─────────────────────────────────────── */}
+            <motion.div
+              initial={{ opacity: 0, x: -24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              {/* Big headline — brand pill embedded in last line */}
+              <h1 className="font-heading font-extrabold text-foreground leading-[1.08] tracking-tight mb-5"
+                style={{ fontSize: "clamp(2.2rem, 5vw, 3.5rem)" }}>
+                Run Real Experiments —{" "}
+                <br className="hidden sm:block" />
+                Learn Science Hands-On with
+                <br />
+                <span
+                  className="inline-flex items-center gap-2.5 px-5 py-2 rounded-2xl text-white mt-3"
+                  style={{ background: "hsl(160 63% 32%)", fontSize: "0.92em" }}
+                >
+                  <FlaskConical className="w-6 h-6 flex-shrink-0" />
+                  Virtual Science Lab
                 </span>
-                <span className="absolute bottom-1 left-0 right-0 h-2.5 bg-accent/25 rounded -z-0" />
-              </span>
-            </h1>
+              </h1>
 
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto mb-8">
-              Virtual labs for physics, chemistry, biology &amp; agriculture.
-              Run real experiments — no equipment, no mess, no limits.
-            </p>
+              {/* Subtitle */}
+              <p className="text-base text-muted-foreground leading-relaxed mb-8 max-w-md">
+                Physics, chemistry, biology &amp; agriculture experiments —
+                interactive, guided, and completely free. No equipment needed.
+              </p>
 
-            {/* CTAs */}
-            <div className="flex items-center justify-center gap-3 flex-wrap mb-12">
-              <a
-                href="#experiments"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 hover:shadow-primary/35 hover:-translate-y-0.5"
+              {/* CTAs */}
+              <div className="flex items-center gap-3 flex-wrap mb-10">
+                <a
+                  href="#experiments"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-semibold text-sm shadow-lg hover:bg-primary/90 hover:-translate-y-0.5 transition-all"
+                  style={{ boxShadow: "0 8px 24px hsl(160 63% 32% / 0.3)" }}
+                >
+                  Get Started
+                </a>
+                <a
+                  href="#experiments"
+                  className="inline-flex items-center gap-2.5 text-sm font-semibold text-foreground hover:text-primary transition-colors"
+                >
+                  <span className="w-10 h-10 rounded-full bg-white border border-border shadow-sm flex items-center justify-center">
+                    <Play className="w-4 h-4 fill-primary text-primary ml-0.5" />
+                  </span>
+                  Browse Experiments
+                </a>
+              </div>
+
+              {/* Stats */}
+              <div className="flex items-center gap-8 sm:gap-10">
+                <div>
+                  <div className="text-3xl font-extrabold font-heading text-foreground leading-none">{totalExperiments}</div>
+                  <div className="text-xs text-muted-foreground mt-1">Experiments</div>
+                </div>
+                <div className="w-px h-8 bg-border" />
+                <div>
+                  <div className="text-3xl font-extrabold font-heading text-foreground leading-none">{GROUPS.length}</div>
+                  <div className="text-xs text-muted-foreground mt-1">Subjects</div>
+                </div>
+                <div className="w-px h-8 bg-border" />
+                <div>
+                  <div className="text-3xl font-extrabold font-heading text-foreground leading-none">100%</div>
+                  <div className="text-xs text-muted-foreground mt-1">Free</div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* ── Right: Floating cards ──────────────────────────── */}
+            <motion.div
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="hidden lg:flex flex-col items-end gap-4"
+            >
+              {/* App icon card */}
+              <motion.div
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="bg-white rounded-2xl shadow-xl border border-border p-4 w-24 h-24 flex items-center justify-center self-end mr-8"
               >
-                Start Experimenting <ArrowRight className="w-4 h-4" />
-              </a>
-              <a
-                href="#experiments"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-primary/25 text-primary font-semibold text-sm hover:bg-primary/5 transition-colors"
-              >
-                <BookOpen className="w-4 h-4" /> Browse All Labs
-              </a>
-            </div>
+                <div
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                  style={{ background: "linear-gradient(135deg, hsl(160 63% 32%), hsl(160 55% 48%))" }}
+                >
+                  <FlaskConical className="w-7 h-7 text-white" />
+                </div>
+              </motion.div>
 
-            {/* Stats row */}
-            <div className="inline-flex items-center gap-6 sm:gap-10 px-8 py-5 rounded-2xl bg-card border border-border shadow-sm">
-              <Stat value={`${availableCount}`} label="Open Labs" />
-              <div className="w-px h-8 bg-border" />
-              <Stat value={`${GROUPS.length}`} label="Subjects" />
-              <div className="w-px h-8 bg-border" />
-              <Stat value={`${totalExperiments}`} label="Experiments" />
-              <div className="w-px h-8 bg-border" />
-              <Stat value="Free" label="Always" />
-            </div>
-          </motion.div>
+              {/* Main preview card */}
+              <motion.div
+                animate={{ y: [0, 6, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                className="bg-white rounded-3xl shadow-xl border border-border p-6 w-72"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center"
+                    style={{ background: "hsl(160 63% 32% / 0.12)" }}
+                  >
+                    <FlaskConical className="w-5 h-5" style={{ color: "hsl(160 63% 32%)" }} />
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold font-heading text-foreground">Simple Pendulum</div>
+                    <div className="text-xs text-muted-foreground">Physics · Easy</div>
+                  </div>
+                </div>
+                {/* Fake chart bars */}
+                <div className="flex items-end gap-1.5 h-16 mb-3">
+                  {[40, 65, 55, 80, 70, 90, 75].map((h, i) => (
+                    <div
+                      key={i}
+                      className="flex-1 rounded-sm"
+                      style={{
+                        height: `${h}%`,
+                        background: i === 5
+                          ? "hsl(36 95% 54%)"
+                          : "hsl(160 63% 32% / 0.2)",
+                      }}
+                    />
+                  ))}
+                </div>
+                <div className="text-xs text-muted-foreground">T² vs. Length — 7 data points collected</div>
+              </motion.div>
+
+              {/* Social proof card */}
+              <motion.div
+                animate={{ y: [0, -5, 0] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="bg-white rounded-2xl shadow-lg border border-border px-5 py-3.5 flex items-center gap-4 self-start ml-8"
+              >
+                <div className="flex -space-x-2">
+                  {SUBJECT_DOTS.map((s) => (
+                    <div
+                      key={s.label}
+                      className="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-[11px] font-bold text-white flex-shrink-0"
+                      style={{ backgroundColor: s.color }}
+                      title={s.title}
+                    >
+                      {s.label}
+                    </div>
+                  ))}
+                  <div className="w-8 h-8 rounded-full border-2 border-white bg-muted flex items-center justify-center text-[10px] font-bold text-muted-foreground flex-shrink-0">
+                    +
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-foreground">{availableCount} labs open now</div>
+                  <div className="text-[11px] text-muted-foreground">across {GROUPS.length} subjects</div>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ── Subject sections ── */}
-      <section id="experiments" className="max-w-6xl mx-auto px-4 py-14 space-y-14">
+      {/* ── Experiment sections ─────────────────────────────────────────── */}
+      <section id="experiments" className="max-w-6xl mx-auto px-6 py-14 space-y-14">
 
-        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -399,7 +450,6 @@ export default function Home() {
           </span>
         </motion.div>
 
-        {/* Groups */}
         {GROUPS.map((group, gi) => {
           const GroupIcon = group.icon;
           return (
@@ -409,17 +459,15 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15 + gi * 0.1 }}
             >
-              {/* Group header */}
               <div className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-full ${group.bg} border ${group.border} mb-5`}>
                 <GroupIcon className={`w-4 h-4 ${group.color}`} />
                 <span className={`text-sm font-bold font-heading ${group.color}`}>
                   {group.label}
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  · {group.experiments.filter(e => e.available).length}/{group.experiments.length} available
+                  · {group.experiments.filter((e) => e.available).length}/{group.experiments.length} available
                 </span>
               </div>
-
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {group.experiments.map((exp, i) => (
                   <ExpCard key={exp.title} exp={exp} index={gi * 5 + i} />
@@ -430,9 +478,9 @@ export default function Home() {
         })}
       </section>
 
-      {/* ── Footer ── */}
-      <footer className="border-t border-border bg-secondary/40">
-        <div className="max-w-6xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* ── Footer ─────────────────────────────────────────────────────── */}
+      <footer className="border-t border-border bg-secondary/50">
+        <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
               <FlaskConical className="w-3.5 h-3.5 text-white" />
@@ -440,7 +488,7 @@ export default function Home() {
             <span className="font-bold font-heading text-sm text-foreground">Virtual Science Lab</span>
           </div>
           <p className="text-xs text-muted-foreground text-center">
-            Interactive experiments for curious minds.
+            Interactive experiments for curious minds. Always free.
           </p>
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <span className="w-1.5 h-1.5 rounded-full bg-primary" />
