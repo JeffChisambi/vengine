@@ -98,22 +98,47 @@ export function TitrationIntroSVG() {
       <rect x="36" y="60" width="60" height="6" rx="3" fill="#94a3b8" />
       <rect x="88" y="52" width="14" height="22" rx="4" fill="#64748b" />
 
-      {/* Burette */}
-      <rect x="94" y="20" width="18" height="180" rx="4" fill="url(#tiGlass)" stroke="#7dd3fc" strokeWidth="1.5" />
-      <GlassSheen x={94} y={20} w={18} h={180} />
-      {/* Liquid inside burette (NaOH, clear) */}
-      <rect x="95.5" y="21" width="15" height="160" rx="3" fill="#bae6fd" fillOpacity={0.5} />
-      {/* Graduation marks */}
-      {[0, 0.2, 0.4, 0.6, 0.8, 1.0].map((t, i) => (
-        <g key={i}>
-          <line x1={90} y1={21 + t * 155} x2={93} y2={21 + t * 155} stroke="#475569" strokeWidth={1.2} />
-          <text x={86} y={24 + t * 155} textAnchor="end" fontSize="6" fill="#64748b">{i * 10}</text>
-        </g>
-      ))}
-      {/* Stopcock */}
-      <rect x="82" y="203" width="42" height="9" rx="4.5" fill="#64748b" />
-      {/* Tip */}
-      <line x1={103} y1={212} x2={103} y2={232} stroke="#94a3b8" strokeWidth={3} strokeLinecap="round" />
+      {/* ── Burette (intro overview) ── */}
+      {(() => {
+        const cx=103, bl=93, br=113, by=18, bbh=178, bscY=196, bscH=14, tapBot=222, tipBot=230;
+        return (
+          <g>
+            {/* Tube body */}
+            <path d={`M${bl},${by+5} Q${bl},${by} ${bl+5},${by} L${br-5},${by} Q${br},${by} ${br},${by+5} L${br},${bscY} L${bl},${bscY} Z`}
+              fill="url(#tiGlass)" stroke="#7dd3fc" strokeWidth="1.5" />
+            {/* Top elliptical rim */}
+            <ellipse cx={cx} cy={by} rx={11} ry={3.5} fill="#dbeafe" fillOpacity={0.55} stroke="#7dd3fc" strokeWidth="1.2" />
+            {/* Liquid */}
+            <rect x={bl+1.5} y={by+2} width={br-bl-3} height={160} rx="2" fill="#bae6fd" fillOpacity={0.5} />
+            {/* Liquid surface ellipse */}
+            <ellipse cx={cx} cy={by+2} rx={9} ry={2.8} fill="#38bdf8" fillOpacity={0.6} />
+            {/* Highlight */}
+            <path d={`M${bl+2},${by+8} L${bl+2},${bscY-3}`} stroke="white" strokeWidth="2.5" strokeOpacity={0.18} strokeLinecap="round" />
+            {/* Grad marks */}
+            {[0,0.2,0.4,0.6,0.8,1].map((t,i) => (
+              <g key={i}>
+                <line x1={bl-7} y1={by+2+t*155} x2={bl-1} y2={by+2+t*155} stroke="#475569" strokeWidth={1.1} />
+                <text x={bl-9} y={by+5+t*155} textAnchor="end" fontSize="6" fill="#64748b">{i*10}</text>
+              </g>
+            ))}
+            {/* Stopcock barrel */}
+            <path d={`M${bl},${bscY} Q${bl-7},${bscY} ${bl-8},${bscY+bscH/2} Q${bl-7},${bscY+bscH} ${bl},${bscY+bscH} L${br},${bscY+bscH} Q${br+7},${bscY+bscH} ${br+8},${bscY+bscH/2} Q${br+7},${bscY} ${br},${bscY} Z`}
+              fill="#dbeafe" fillOpacity={0.85} stroke="#7dd3fc" strokeWidth="1.4" />
+            {/* Key handles */}
+            <rect x={bl-22} y={bscY+3} width={17} height={6} rx="3" fill="#64748b" />
+            <rect x={br+5}  y={bscY+3} width={17} height={6} rx="3" fill="#64748b" />
+            {/* Centre disk */}
+            <circle cx={cx} cy={bscY+bscH/2} r={6.5} fill="#94a3b8" stroke="#64748b" strokeWidth="1" />
+            <circle cx={cx} cy={bscY+bscH/2} r={2.5} fill="#22c55e" />
+            {/* Taper */}
+            <path d={`M${bl+3},${bscY+bscH} L${cx-3},${tapBot} L${cx+3},${tapBot} L${br-3},${bscY+bscH} Z`}
+              fill="#dbeafe" fillOpacity={0.75} stroke="#7dd3fc" strokeWidth="1.2" />
+            {/* Fine tip */}
+            <rect x={cx-3} y={tapBot} width={6} height={tipBot-tapBot} rx="3"
+              fill="#bae6fd" fillOpacity={0.9} stroke="#38bdf8" strokeWidth="1" />
+          </g>
+        );
+      })()}
 
       {/* Erlenmeyer flask */}
       <path d="M148,145 L152,145 L165,175 Q198,188 198,222 Q198,238 160,238 Q122,238 122,222 Q122,188 135,175 Z"
@@ -203,24 +228,62 @@ export function SetupSVG({ phase = 0 }) {
       {/* Burette */}
       <motion.g initial={{ opacity: 0, y: -15 }} animate={{ opacity: phase >= 0 ? 1 : 0, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}>
-        <rect x="114" y="22" width="22" height="185" rx="4" fill="url(#setupGlass)" stroke={phaseColors[phase]} strokeWidth={phase === 3 ? 2 : 1.5} />
-        <GlassSheen x={114} y={22} w={22} h={185} />
-        {/* Liquid (visible from phase 1) */}
-        {phase >= 1 && (
-          <motion.rect x="116" y="23" width="18" height="165" rx="3"
-            fill="#bae6fd" fillOpacity={0.55}
-            initial={{ height: 0 }} animate={{ height: 165 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-          />
-        )}
-        {[0, 0.25, 0.5, 0.75, 1].map((t, i) => (
-          <g key={i}>
-            <line x1={110} y1={24 + t * 180} x2={113} y2={24 + t * 180} stroke="#475569" strokeWidth={1} />
-            <text x={107} y={27 + t * 180} textAnchor="end" fontSize="6" fill="#64748b">{i * 12}</text>
-          </g>
-        ))}
-        <rect x="100" y="209" width="50" height="9" rx="4.5" fill="#64748b" />
-        <line x1={125} y1={218} x2={125} y2={240} stroke="#94a3b8" strokeWidth={3} strokeLinecap="round" />
+        {/* ── Realistic burette (setup SVG) ── */}
+        {(() => {
+          const cx=125, bl=113, br=139, by=20, bbh=183, bscY=203, bscH=15, tapBot=228, tipBot=238;
+          const sc = phaseColors[phase];
+          const sw = phase === 3 ? 2 : 1.5;
+          return (
+            <g>
+              {/* Tube body */}
+              <path d={`M${bl},${by+6} Q${bl},${by} ${bl+6},${by} L${br-6},${by} Q${br},${by} ${br},${by+6} L${br},${bscY} L${bl},${bscY} Z`}
+                fill="url(#setupGlass)" stroke={sc} strokeWidth={sw} />
+              {/* Top rim */}
+              <ellipse cx={cx} cy={by} rx={13} ry={4} fill="#dbeafe" fillOpacity={0.5} stroke={sc} strokeWidth={sw*0.8} />
+              <ellipse cx={cx} cy={by} rx={9.5} ry={2.8} fill="#0ea5e9" fillOpacity={0.15} />
+              {/* Liquid fill (phase ≥ 1) */}
+              {phase >= 1 && (
+                <motion.rect x={bl+2} y={by+2} width={br-bl-4}
+                  fill="#bae6fd" fillOpacity={0.55} rx="2"
+                  initial={{ height: 0 }} animate={{ height: bbh - 4 }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                />
+              )}
+              {/* Liquid surface ellipse */}
+              {phase >= 1 && (
+                <motion.ellipse cx={cx} rx={10} ry={3}
+                  fill="#38bdf8" fillOpacity={0.65}
+                  initial={{ cy: by + 2 }} animate={{ cy: by + 2 + (bbh - 4) }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                />
+              )}
+              {/* Glass highlight */}
+              <path d={`M${bl+2},${by+8} L${bl+2},${bscY-3}`} stroke="white" strokeWidth="3" strokeOpacity={0.18} strokeLinecap="round" />
+              {/* Graduation marks */}
+              {[0,0.25,0.5,0.75,1].map((t,i) => (
+                <g key={i}>
+                  <line x1={bl-8} y1={by+2+t*(bbh-4)} x2={bl-1} y2={by+2+t*(bbh-4)} stroke="#475569" strokeWidth={1.1} />
+                  <text x={bl-10} y={by+5+t*(bbh-4)} textAnchor="end" fontSize="6" fill="#64748b">{i*12}</text>
+                </g>
+              ))}
+              {/* Stopcock barrel */}
+              <path d={`M${bl},${bscY} Q${bl-8},${bscY} ${bl-9},${bscY+bscH/2} Q${bl-8},${bscY+bscH} ${bl},${bscY+bscH} L${br},${bscY+bscH} Q${br+8},${bscY+bscH} ${br+9},${bscY+bscH/2} Q${br+8},${bscY} ${br},${bscY} Z`}
+                fill="#dbeafe" fillOpacity={0.88} stroke={sc} strokeWidth={sw} />
+              {/* Key handles */}
+              <rect x={bl-26} y={bscY+4} width={20} height={7} rx="3.5" fill="#64748b" />
+              <rect x={br+6}  y={bscY+4} width={20} height={7} rx="3.5" fill="#64748b" />
+              {/* Centre disk */}
+              <circle cx={cx} cy={bscY+bscH/2} r={7.5} fill="#94a3b8" stroke="#64748b" strokeWidth="1.1" />
+              <circle cx={cx} cy={bscY+bscH/2} r={3}   fill="#22c55e" />
+              {/* Taper */}
+              <path d={`M${bl+4},${bscY+bscH} L${cx-3.5},${tapBot} L${cx+3.5},${tapBot} L${br-4},${bscY+bscH} Z`}
+                fill="#dbeafe" fillOpacity={0.78} stroke={sc} strokeWidth={sw*0.85} />
+              {/* Fine tip */}
+              <rect x={cx-3.5} y={tapBot} width={7} height={tipBot-tapBot} rx="3.5"
+                fill="#bae6fd" fillOpacity={0.92} stroke="#38bdf8" strokeWidth="1" />
+            </g>
+          );
+        })()}
       </motion.g>
 
       {/* Pipette (visible at phase >= 2) */}
@@ -372,9 +435,21 @@ export function TitrationViewSVG({
   const remaining = Math.max(0, buretteFull - volumeAdded);
   const liquidFrac = remaining / buretteFull;
 
-  // Burette dimensions
-  const BY = 18, BH = 180, BX = 122, BW = 26;
-  const liquidH = liquidFrac * (BH - 4);
+  // ── Burette anatomy ───────────────────────────────────────────────
+  const BCX     = 150;              // center x — aligned over flask neck
+  const BL      = 133;              // tube left edge
+  const BR      = 167;              // tube right edge
+  const BW      = BR - BL;         // 34 px tube width
+  const BY      = 12;              // top of tube
+  const BBH     = 190;             // tube body height → tube bottom y = 202
+  const BSC_Y   = BY + BBH;        // 202 — stopcock housing top
+  const BSC_H   = 18;              // stopcock housing height
+  const BTAPER_Y   = BSC_Y + BSC_H;  // 220 — top of glass taper
+  const BTAPER_BOT = 237;           // bottom of taper
+  const BTIP_BOT   = 247;           // fine tip end (just above flask neck)
+
+  const liquidH        = liquidFrac * (BBH - 4);
+  const liquidSurfaceY = BY + 2 + liquidH;
 
   // Flask clip path
   const FLASK_PATH = "M138,258 L162,258 L180,296 Q218,312 218,352 Q218,370 150,370 Q82,370 82,352 Q82,312 120,296 Z";
@@ -420,55 +495,121 @@ export function TitrationViewSVG({
       {/* Retort stand */}
       <rect x="32" y="18" width="7" height="348" rx="3.5" fill="#475569" />
       <rect x="14" y="366" width="44" height="6" rx="3" fill="#334155" />
-      {/* Clamp arm */}
-      <rect x="39" y="52" width="86" height="8" rx="4" fill="#64748b" />
-      <rect x="117" y="44" width="18" height="26" rx="5" fill="#475569" />
+      {/* Clamp arm — extends from stand to burette */}
+      <rect x="39" y="52" width={BL - 12 - 39} height="8" rx="4" fill="#64748b" />
+      {/* Clamp block gripping left side of burette */}
+      <rect x={BL - 13} y="44" width="14" height="26" rx="4" fill="#475569" />
+      <rect x={BL - 13} y="50" width="14" height="12" rx="2" fill="#334155" fillOpacity={0.5} />
 
-      {/* Burette outer tube */}
-      <rect x={BX} y={BY} width={BW} height={BH} rx="5"
+      {/* ── BURETTE BODY ─────────────────────────────────────────── */}
+
+      {/* Glass tube — slightly rounded top corners */}
+      <path d={`M${BL},${BY+7} Q${BL},${BY} ${BL+7},${BY} L${BR-7},${BY} Q${BR},${BY} ${BR},${BY+7} L${BR},${BSC_Y} L${BL},${BSC_Y} Z`}
         fill="url(#tvBuretteGlass)" stroke="#7dd3fc" strokeWidth="1.8" />
-      <GlassSheen x={BX} y={BY} w={BW} h={BH} />
 
-      {/* Burette liquid (NaOH remaining) */}
-      <motion.rect x={BX + 2} y={BY + 2} width={BW - 4}
-        fill="url(#tvLiquid)"
+      {/* Top elliptical rim — 3-D perspective */}
+      <ellipse cx={BCX} cy={BY} rx={17} ry={5.5}
+        fill="#dbeafe" fillOpacity={0.5} stroke="#7dd3fc" strokeWidth="1.5" />
+      <ellipse cx={BCX} cy={BY} rx={12.5} ry={3.8}
+        fill="#0ea5e9" fillOpacity={0.15} />
+
+      {/* NaOH liquid column */}
+      <motion.rect x={BL + 2} y={BY + 2} width={BW - 4}
+        fill="url(#tvLiquid)" rx="2"
         animate={{ height: liquidH }}
         transition={{ duration: 0.4 }}
-        rx="3"
+      />
+      {/* Liquid surface — 3-D ellipse */}
+      <motion.ellipse cx={BCX} rx={14} ry={4}
+        fill="#38bdf8" fillOpacity={0.65}
+        animate={{ cy: liquidSurfaceY }}
+        transition={{ duration: 0.4 }}
       />
 
-      {/* Graduation marks */}
-      {[0, 0.2, 0.4, 0.6, 0.8, 1.0].map((t, i) => (
-        <g key={i}>
-          <line x1={BX - 8} y1={BY + t * BH} x2={BX} y2={BY + t * BH} stroke="#475569" strokeWidth="1.2" />
-          <text x={BX - 10} y={BY + 3 + t * BH} textAnchor="end" fontSize="7" fill="#64748b" fontFamily="monospace">
-            {i * 10}
-          </text>
-        </g>
-      ))}
+      {/* Glass highlight stripe */}
+      <path d={`M${BL+3},${BY+10} L${BL+3},${BSC_Y-4}`}
+        stroke="white" strokeWidth="4" strokeOpacity={0.15} strokeLinecap="round" />
+      <path d={`M${BL+5},${BY+10} L${BL+5},${BSC_Y-4}`}
+        stroke="white" strokeWidth="1.5" strokeOpacity={0.18} strokeLinecap="round" />
 
-      {/* Stopcock */}
-      <rect x={BX - 18} y={BY + BH + 2} width={BW + 36} height={10} rx="5" fill="#475569" />
-      <circle cx={BX + BW / 2} cy={BY + BH + 7} r={5} fill="#94a3b8" />
-      {/* Stopcock open indicator */}
-      <rect x={BX + BW / 2 - 1.5} y={BY + BH + 4} width={3} height={6} rx="1.5" fill="#22c55e" />
+      {/* Graduation marks — major every 10 mL, minor every 2 mL */}
+      {Array.from({ length: 26 }, (_, i) => i * 2).map((vol) => {
+        const isMajor = vol % 10 === 0;
+        const gy = BY + 2 + (vol / 50) * (BBH - 4);
+        return (
+          <g key={vol}>
+            <line
+              x1={BL - (isMajor ? 10 : 5)} y1={gy}
+              x2={BL - 1}                  y2={gy}
+              stroke={isMajor ? "#334155" : "#94a3b8"}
+              strokeWidth={isMajor ? 1.3 : 0.7}
+            />
+            {isMajor && (
+              <text x={BL - 13} y={gy + 3} textAnchor="end"
+                fontSize="7" fill="#475569" fontFamily="monospace">{vol}</text>
+            )}
+          </g>
+        );
+      })}
 
-      {/* Burette tip */}
-      <rect x={BX + 10} y={BY + BH + 12} width={6} height={26} rx="3" fill="#7dd3fc" stroke="#38bdf8" strokeWidth="1" />
+      {/* ── STOPCOCK HOUSING ─────────────────────────────────────── */}
 
-      {/* Animated Drop */}
+      {/* Barrel-shaped glass housing (wider than tube on both sides) */}
+      <path d={`
+        M${BL},${BSC_Y}
+        Q${BL-10},${BSC_Y}   ${BL-11},${BSC_Y + BSC_H/2}
+        Q${BL-10},${BSC_Y+BSC_H} ${BL},${BSC_Y+BSC_H}
+        L${BR},${BSC_Y+BSC_H}
+        Q${BR+10},${BSC_Y+BSC_H} ${BR+11},${BSC_Y + BSC_H/2}
+        Q${BR+10},${BSC_Y}   ${BR},${BSC_Y}
+        Z`}
+        fill="#dbeafe" fillOpacity={0.85} stroke="#7dd3fc" strokeWidth="1.8" />
+      {/* Shine on housing */}
+      <ellipse cx={BCX - 5} cy={BSC_Y + 5} rx={5} ry={2.5}
+        fill="white" fillOpacity={0.28} />
+
+      {/* PTFE key handle — left bar */}
+      <rect x={BL - 38} y={BSC_Y + 5} width={30} height={8} rx="4"
+        fill="#64748b" stroke="#475569" strokeWidth="0.8" />
+      {/* PTFE key handle — right bar */}
+      <rect x={BR + 8}  y={BSC_Y + 5} width={30} height={8} rx="4"
+        fill="#64748b" stroke="#475569" strokeWidth="0.8" />
+      {/* Centre disk (the rotating plug) */}
+      <circle cx={BCX} cy={BSC_Y + BSC_H/2} r={9.5}
+        fill="#94a3b8" stroke="#64748b" strokeWidth="1.2" />
+      {/* Bore indicator — green = open */}
+      <circle cx={BCX} cy={BSC_Y + BSC_H/2} r={3.5} fill="#22c55e" />
+      <circle cx={BCX} cy={BSC_Y + BSC_H/2} r={1.5} fill="#16a34a" />
+
+      {/* ── TAPERED TIP SECTION ──────────────────────────────────── */}
+
+      {/* Glass taper — symmetric trapezoid */}
+      <path d={`M${BL+5},${BTAPER_Y} L${BCX-4},${BTAPER_BOT} L${BCX+4},${BTAPER_BOT} L${BR-5},${BTAPER_Y} Z`}
+        fill="#dbeafe" fillOpacity={0.78} stroke="#7dd3fc" strokeWidth="1.5" />
+      {/* Taper highlight */}
+      <path d={`M${BL+6},${BTAPER_Y} L${BCX-5},${BTAPER_BOT}`}
+        stroke="white" strokeWidth="1.5" strokeOpacity={0.22} strokeLinecap="round" />
+
+      {/* Fine glass tip */}
+      <rect x={BCX - 4} y={BTAPER_BOT} width={8} height={BTIP_BOT - BTAPER_BOT} rx="4"
+        fill="#bae6fd" fillOpacity={0.92} stroke="#38bdf8" strokeWidth="1.2" />
+      {/* Tip highlight */}
+      <line x1={BCX - 2} y1={BTAPER_BOT + 2} x2={BCX - 2} y2={BTIP_BOT - 2}
+        stroke="white" strokeWidth="1" strokeOpacity={0.3} strokeLinecap="round" />
+
+      {/* Animated Drop — falls from fine tip into flask */}
       <AnimatePresence>
         <motion.g key={dropKey}>
-          <motion.ellipse cx={BX + BW / 2} rx={5} ry={6} fill="#7dd3fc" fillOpacity={0.9}
+          <motion.ellipse cx={BCX} rx={5} ry={7} fill="#7dd3fc" fillOpacity={0.9}
             filter="url(#tvDropGlow)"
-            initial={{ cy: BY + BH + 40, scaleX: 1, scaleY: 1, opacity: 0 }}
+            initial={{ cy: BTIP_BOT + 1, scaleX: 1, scaleY: 1, opacity: 0 }}
             animate={{
-              cy: [BY + BH + 40, BY + BH + 70, 240],
-              scaleX: [1, 0.8, 1],
-              scaleY: [1, 1.4, 0.7],
-              opacity: [0, 1, 1, 0]
+              cy: [BTIP_BOT + 1, BTIP_BOT + 18, 258],
+              scaleX: [1, 0.7, 1],
+              scaleY: [1, 1.6, 0.6],
+              opacity: [0, 1, 1, 0],
             }}
-            transition={{ duration: 0.7, ease: "easeIn", times: [0, 0.2, 0.85, 1] }}
+            transition={{ duration: 0.75, ease: "easeIn", times: [0, 0.15, 0.9, 1] }}
           />
         </motion.g>
       </AnimatePresence>
