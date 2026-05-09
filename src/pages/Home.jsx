@@ -25,6 +25,7 @@ import {
   Menu,
   X,
   Sun,
+  Droplets,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -180,6 +181,17 @@ const ALL_EXPERIMENTS = [
     path: "/experiment/photosynthesis",
     accentColor: "#15803d",
     accentBg: "from-emerald-500 to-green-700",
+    subject: "Biology",
+    difficulty: "Medium",
+    available: true,
+  },
+  {
+    title: "Effects of Concentration on Osmosis",
+    description: "Place potato strips in four NaCl solutions of increasing concentration, watch water move by osmosis, and plot the % mass change to find the isotonic point of potato cells.",
+    icon: Droplets,
+    path: "/experiment/osmosis",
+    accentColor: "#0369a1",
+    accentBg: "from-cyan-500 to-blue-600",
     subject: "Biology",
     difficulty: "Medium",
     available: true,
