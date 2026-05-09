@@ -1,0 +1,12 @@
+export { default as BiologicalSpecimenSVG } from "./BiologicalSpecimenSVG";
+export { default as CellModelSVG }          from "./CellModelSVG";
+export { default as CoverSlipSVG }          from "./CoverSlipSVG";
+export { default as DissectionTraySVG }     from "./DissectionTraySVG";
+export { default as DNAHelixSVG }           from "./DNAHelixSVG";
+export { default as ForcepsSVG }            from "./ForcepsSVG";
+export { default as MicroscopeSlideSVG }    from "./MicroscopeSlideSVG";
+export { default as MicroscopeSVG }         from "./MicroscopeSVG";
+export { default as PetriDishSVG }          from "./PetriDishSVG";
+export { default as PlantCellSVG }          from "./PlantCellSVG";
+export { default as ScalpelSVG }            from "./ScalpelSVG";
+export { default as TongsSVG }              from "./TongsSVG";
