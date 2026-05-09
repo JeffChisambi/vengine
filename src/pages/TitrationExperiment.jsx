@@ -10,8 +10,8 @@ import ExperimentShell from "@/components/lab/ExperimentShell";
 import {
   TitrationIntroSVG, SetupSVG, IndicatorDropSVG,
   TitrationViewSVG, MolecularSVG, PHCurveSVG, EndpointSVG,
-  getFlaskColor, getPH,
 } from "@/components/titration/TitrationSVG";
+import { getFlaskColor, getPH } from "@/components/titration/titrationUtils";
 
 const V_ENDPOINT = 23.5;
 const V_HCL = 25.0;
@@ -225,7 +225,7 @@ export default function TitrationExperiment() {
               </p>
             </motion.div>
 
-            <div className="w-full max-w-xs mx-auto h-56">
+            <div className="w-full max-w-sm mx-auto h-64">
               <TitrationIntroSVG />
             </div>
 
@@ -262,7 +262,7 @@ export default function TitrationExperiment() {
               transition={{ duration: 0.5 }}
               className="rounded-3xl border-2 border-cyan-500/25 bg-gradient-to-br from-card to-cyan-500/5 p-4 flex items-center justify-center"
               style={{ minHeight: 320 }}>
-              <div className="w-full max-w-xs">
+              <div className="w-full h-72">
                 <SetupSVG phase={setupPhase} />
               </div>
             </motion.div>
@@ -341,7 +341,7 @@ export default function TitrationExperiment() {
               transition={{ duration: 0.5 }}
               className="rounded-3xl border-2 border-pink-500/25 bg-gradient-to-br from-card to-pink-500/5 p-4 flex items-center justify-center"
               style={{ minHeight: 320 }}>
-              <div className="w-full max-w-xs">
+              <div className="w-full h-72">
                 <IndicatorDropSVG dropped={indicatorDropped} indicator={indicator} />
               </div>
             </motion.div>
@@ -444,7 +444,7 @@ export default function TitrationExperiment() {
 
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 items-start">
               <div className="lg:col-span-2 rounded-3xl border-2 border-cyan-500/25 bg-gradient-to-br from-card to-cyan-500/5 p-3 flex items-center justify-center" style={{ minHeight: 360 }}>
-                <div className="w-full max-w-[240px]">
+                <div className="w-full h-[360px]">
                   <TitrationViewSVG
                     neutralization={neutralization}
                     dropKey={dropKey}
