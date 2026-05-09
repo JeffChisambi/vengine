@@ -208,6 +208,17 @@ const ALL_EXPERIMENTS = [
     available: true,
   },
   {
+    title: "Reaction of Metals with Acids",
+    description: "Drop magnesium, zinc, iron, or copper into dilute HCl or H₂SO₄ and watch how the reactivity series determines the vigour of each reaction.",
+    icon: FlaskConical,
+    path: "/experiment/metals-acids",
+    accentColor: "#7c3aed",
+    accentBg: "from-violet-500 to-purple-600",
+    subject: "Chemistry",
+    difficulty: "Medium",
+    available: true,
+  },
+  {
     title: "Soil Texture Test",
     description: "Add soil to a jar, shake with water, and watch sand, silt, and clay settle into distinct layers — then classify the soil by its proportions.",
     icon: Layers,

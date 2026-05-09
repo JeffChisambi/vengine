@@ -18,6 +18,7 @@ import PhotosynthesisExperiment from "./pages/PhotosynthesisExperiment";
 import TitrationExperiment from "./pages/TitrationExperiment";
 import ElectrolysisExperiment from "./pages/ElectrolysisExperiment";
 import SoilTextureExperiment from "./pages/SoilTextureExperiment";
+import MetalsAcidsExperiment from "./pages/MetalsAcidsExperiment";
 import OsmosisExperiment from "./pages/OsmosisExperiment";
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           <Route path="/experiment/titration" element={<TitrationExperiment />} />
           <Route path="/experiment/electrolysis" element={<ElectrolysisExperiment />} />
           <Route path="/experiment/soil-texture" element={<SoilTextureExperiment />} />
+          <Route path="/experiment/metals-acids" element={<MetalsAcidsExperiment />} />
           <Route path="/experiment/osmosis" element={<OsmosisExperiment />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
