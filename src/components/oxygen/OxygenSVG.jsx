@@ -115,10 +115,15 @@ export function OxygenApparatusSVG({ phase = 4, heating = false, progress = 0, m
   const gasTopY = JAR_TOP;                   // gas always at top (closed end)
   const waterTopY = JAR_TOP + gasH;          // water-gas interface
 
-  /* Flask liquid level */
+  /* Flask liquid level
+   * FC.y + FC.r = 283 (top of wire gauze at y=283)
+   * jY = FC.y - sqrt(r²-13²) = 225 - 56.5 ≈ 168  (neck-to-body junction)
+   */
   const liqLevel = Math.max(0.18, 0.42 - progress * 0.12);
-  const FC = { x: 175, y: 218, r: 66 };     // flask centre
-  const liquidY = FC.y + FC.r - FC.r * 2 * liqLevel;
+  const FC = { x: 175, y: 225, r: 58 };     // flask centre — bottom sits at y=283
+  const jY  = 168;                           // junction y where neck flares into body
+  const neckTop = 113;                       // top of flask neck (below stopper)
+  const liquidY = FC.y + FC.r - FC.r * 2 * liqLevel; // = 283 - 116*liqLevel
 
   return (
     <svg viewBox="0 0 540 418" className="w-full h-full max-h-[418px]"
@@ -147,9 +152,10 @@ export function OxygenApparatusSVG({ phase = 4, heating = false, progress = 0, m
           <stop offset="100%" stopColor="#6ee7b7" stopOpacity="0.4" />
         </linearGradient>
         <clipPath id="oa-flask-clip">
-          <path d={`M ${FC.x - 16} ${FC.y - FC.r + 32} L ${FC.x - 16} ${FC.y - FC.r + 65}
-                    A ${FC.r} ${FC.r} 0 1 0 ${FC.x + 16} ${FC.y - FC.r + 65}
-                    L ${FC.x + 16} ${FC.y - FC.r + 32} Z`} />
+          {/* Neck half-width = 13 → d = √(58²-13²) ≈ 56.5 → jY = 225-56.5 = 168 → bottom = 225+58 = 283 ✓ */}
+          <path d={`M ${FC.x-13} ${neckTop} L ${FC.x-13} ${jY}
+                    A ${FC.r} ${FC.r} 0 1 0 ${FC.x+13} ${jY}
+                    L ${FC.x+13} ${neckTop} Z`} />
         </clipPath>
         <clipPath id="oa-jar-clip">
           <rect x={JAR_X} y={JAR_TOP} width={JAR_W} height={JAR_H} rx={4} />
@@ -166,10 +172,10 @@ export function OxygenApparatusSVG({ phase = 4, heating = false, progress = 0, m
       {/* Clamp arm + ring (only when flask is placed) */}
       {phase >= 1 && (
         <g>
-          <rect x={FC.x} y={125} width={106} height={7} rx={3}
+          <rect x={FC.x} y={133} width={121} height={7} rx={3}
             fill="url(#oa-metal)" stroke="#475569" strokeWidth={1} />
-          <circle cx={FC.x} cy={128} r={16} fill="none" stroke="#64748b" strokeWidth={4} />
-          <circle cx={FC.x} cy={128} r={9}  fill="#f1f5f9" stroke="#94a3b8" strokeWidth={1} />
+          <circle cx={FC.x} cy={136} r={14} fill="none" stroke="#64748b" strokeWidth={4} />
+          <circle cx={FC.x} cy={136} r={8}  fill="#f1f5f9" stroke="#94a3b8" strokeWidth={1} />
         </g>
       )}
 
@@ -220,49 +226,50 @@ export function OxygenApparatusSVG({ phase = 4, heating = false, progress = 0, m
       {phase >= 1 && (
         <g>
           {/* Neck */}
-          <rect x={FC.x-14} y={143} width={28} height={62} rx={3}
+          <rect x={FC.x-13} y={neckTop} width={26} height={jY-neckTop} rx={3}
             fill="url(#oa-glass)" stroke="#94a3b8" strokeWidth={2.5} />
 
           {/* Liquid (clipped to flask body) */}
           <g clipPath="url(#oa-flask-clip)">
-            <motion.rect x={FC.x - FC.r} width={FC.r * 2 + 2}
+            <motion.rect x={FC.x - FC.r - 2} width={FC.r * 2 + 4}
               fill="url(#oa-liq)"
               animate={{ y: liquidY, height: FC.r * 2 * liqLevel }}
               transition={{ duration: 0.8, ease: "easeInOut" }}
             />
             {/* Liquid surface */}
-            <motion.ellipse cx={FC.x} rx={50} ry={6}
+            <motion.ellipse cx={FC.x} rx={42} ry={5}
               fill={liqColor} fillOpacity={0.4}
+              initial={{ cy: FC.y + FC.r - FC.r * 2 * 0.42 + 3 }}
               animate={{ cy: liquidY + 3 }}
               transition={{ duration: 0.8, ease: "easeInOut" }}
             />
             {/* Bubbles */}
             {heating && [0,1,2,3].map(i => (
-              <motion.circle key={i} cx={FC.x - 20 + i * 14} r={2.5 + i % 2}
+              <motion.circle key={i} cx={FC.x - 18 + i * 12} r={2.5 + i % 2}
                 fill="#c4b5fd" fillOpacity={0.75}
-                initial={{ cy: FC.y + FC.r - 10, opacity: 0 }}
+                initial={{ cy: FC.y + FC.r - 8, opacity: 0 }}
                 animate={{ cy: liquidY + 6, opacity: [0, 0.9, 0] }}
                 transition={{ duration: 1.4, delay: i * 0.28, repeat: Infinity }}
               />
             ))}
           </g>
 
-          {/* Flask body outline */}
-          <path d={`M ${FC.x-16} ${FC.y-FC.r+32} L ${FC.x-16} ${FC.y-FC.r+65}
-                    A ${FC.r} ${FC.r} 0 1 0 ${FC.x+16} ${FC.y-FC.r+65}
-                    L ${FC.x+16} ${FC.y-FC.r+32} Z`}
+          {/* Flask body outline — same path as clip so liquid is perfectly contained */}
+          <path d={`M ${FC.x-13} ${neckTop} L ${FC.x-13} ${jY}
+                    A ${FC.r} ${FC.r} 0 1 0 ${FC.x+13} ${jY}
+                    L ${FC.x+13} ${neckTop} Z`}
             fill="url(#oa-glass)" stroke="#94a3b8" strokeWidth={2.5} fillOpacity={0.55} />
-          {/* Glass sheen */}
-          <path d={`M ${FC.x-FC.r+12} ${FC.y-FC.r+50} Q ${FC.x-FC.r+2} ${FC.y} ${FC.x-FC.r+16} ${FC.y+FC.r-10}`}
+          {/* Glass sheen — left arc highlight */}
+          <path d={`M ${FC.x-FC.r+10} ${jY} Q ${FC.x-FC.r} ${FC.y} ${FC.x-FC.r+14} ${FC.y+FC.r-10}`}
             stroke="#ffffff" strokeWidth={7} strokeLinecap="round" fill="none" opacity={0.2} />
 
           {/* Labels */}
           {phase >= 4 && <>
-            <text x={FC.x - FC.r - 12} y={FC.y + 10}
+            <text x={FC.x - FC.r - 10} y={FC.y + 8}
               textAnchor="end" fontSize={9} fill="#7c3aed" fontFamily="var(--font-body)" fontWeight="bold">
               {liqLabel}
             </text>
-            <text x={FC.x - FC.r - 12} y={FC.y + 24}
+            <text x={FC.x - FC.r - 10} y={FC.y + 21}
               textAnchor="end" fontSize={8} fill="#64748b" fontFamily="var(--font-body)">
               Round-bottom flask
             </text>
@@ -273,10 +280,10 @@ export function OxygenApparatusSVG({ phase = 4, heating = false, progress = 0, m
       {/* ── RUBBER STOPPER ────────────────────────────── */}
       {phase >= 1 && (
         <g>
-          <path d={`M ${FC.x-18} 140 L ${FC.x-14} 148 L ${FC.x+14} 148 L ${FC.x+18} 140 Z`}
+          <path d={`M ${FC.x-18} ${neckTop-12} L ${FC.x-13} ${neckTop} L ${FC.x+13} ${neckTop} L ${FC.x+18} ${neckTop-12} Z`}
             fill="#78716c" stroke="#57534e" strokeWidth={1.5} />
-          <rect x={FC.x-14} y={148} width={28} height={6} rx={2} fill="#a8a29e" />
-          {phase >= 4 && <text x={FC.x - 24} y={134} textAnchor="end" fontSize={8}
+          <rect x={FC.x-13} y={neckTop} width={26} height={5} rx={2} fill="#a8a29e" />
+          {phase >= 4 && <text x={FC.x - 24} y={neckTop - 16} textAnchor="end" fontSize={8}
             fill="#64748b" fontFamily="var(--font-body)">Stopper</text>}
         </g>
       )}
@@ -284,17 +291,17 @@ export function OxygenApparatusSVG({ phase = 4, heating = false, progress = 0, m
       {/* ── DELIVERY TUBE ─────────────────────────────── */}
       {phase >= 2 && (
         <g>
-          {/* Horizontal glass tube from stopper to stand */}
-          <rect x={FC.x+14} y={138} width={282-FC.x-14} height={13} rx={4}
+          {/* Horizontal glass tube exits stopper mid-point */}
+          <rect x={FC.x+13} y={neckTop-9} width={282-FC.x-13} height={13} rx={4}
             fill="url(#oa-glass)" stroke="#94a3b8" strokeWidth={2} fillOpacity={0.6} />
           {/* Elbow */}
-          <path d="M 280 138 Q 295 138 295 152" fill="none" stroke="#94a3b8" strokeWidth={13} strokeLinecap="round" />
-          <path d="M 280 142 Q 291 142 291 152" fill="none" stroke="#e0f2fe" strokeWidth={7} strokeLinecap="round" opacity={0.4} />
+          <path d={`M 280 ${neckTop-9} Q 295 ${neckTop-9} 295 ${neckTop+5}`} fill="none" stroke="#94a3b8" strokeWidth={13} strokeLinecap="round" />
+          <path d={`M 280 ${neckTop-5} Q 291 ${neckTop-5} 291 ${neckTop+5}`} fill="none" stroke="#e0f2fe" strokeWidth={7} strokeLinecap="round" opacity={0.4} />
           {/* Vertical segment down to trough */}
-          <rect x={288} y={150} width={13} height={134} rx={4}
+          <rect x={288} y={neckTop+3} width={13} height={284-(neckTop+3)} rx={4}
             fill="url(#oa-glass)" stroke="#94a3b8" strokeWidth={2} fillOpacity={0.6} />
           {/* Glass sheen */}
-          <line x1={291} y1={152} x2={291} y2={282} stroke="#ffffff" strokeWidth={3}
+          <line x1={291} y1={neckTop+5} x2={291} y2={282} stroke="#ffffff" strokeWidth={3}
             strokeLinecap="round" opacity={0.25} />
 
           {/* Rubber tubing from vertical tube into trough */}
@@ -306,7 +313,7 @@ export function OxygenApparatusSVG({ phase = 4, heating = false, progress = 0, m
           {/* Gas-flow arrows */}
           {heating && <>
             {[0, 1, 2].map(i => (
-              <motion.text key={i} x={210 + i * 28} y={148} fontSize={10}
+              <motion.text key={i} x={210 + i * 28} y={neckTop-2} fontSize={10}
                 fill="#7c3aed" fillOpacity={0.8} fontFamily="sans-serif"
                 animate={{ opacity: [0, 0.9, 0], x: [210+i*28, 222+i*28, 222+i*28] }}
                 transition={{ duration: 1.2, delay: i * 0.35, repeat: Infinity }}
@@ -319,7 +326,7 @@ export function OxygenApparatusSVG({ phase = 4, heating = false, progress = 0, m
             >↓</motion.text>
           </>}
 
-          {phase >= 4 && <text x={FC.x+14+40} y={130} textAnchor="middle" fontSize={8}
+          {phase >= 4 && <text x={FC.x+13+40} y={neckTop-14} textAnchor="middle" fontSize={8}
             fill="#64748b" fontFamily="var(--font-body)">Delivery tube</text>}
         </g>
       )}
