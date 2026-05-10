@@ -153,6 +153,17 @@ const ALL_EXPERIMENTS = [
     available: true,
   },
   {
+    title: "Preparation and Testing of Oxygen",
+    description: "Heat KMnO₄ or decompose H₂O₂ to produce pure oxygen. Collect it by water displacement, then confirm it with a glowing splint, burning charcoal and magnesium tests.",
+    icon: FlaskConical,
+    path: "/experiment/oxygen",
+    accentColor: "#059669",
+    accentBg: "from-emerald-500 to-teal-600",
+    subject: "Chemistry",
+    difficulty: "Medium",
+    available: true,
+  },
+  {
     title: "Exothermic Reactions",
     description: "Measure temperature changes during chemical reactions in a virtual calorimeter.",
     icon: Flame,

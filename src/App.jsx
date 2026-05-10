@@ -20,6 +20,7 @@ import ElectrolysisExperiment from "./pages/ElectrolysisExperiment";
 import SoilTextureExperiment from "./pages/SoilTextureExperiment";
 import MetalsAcidsExperiment from "./pages/MetalsAcidsExperiment";
 import OsmosisExperiment from "./pages/OsmosisExperiment";
+import OxygenExperiment from "./pages/OxygenExperiment";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
           <Route path="/experiment/soil-texture" element={<SoilTextureExperiment />} />
           <Route path="/experiment/metals-acids" element={<MetalsAcidsExperiment />} />
           <Route path="/experiment/osmosis" element={<OsmosisExperiment />} />
+          <Route path="/experiment/oxygen" element={<OxygenExperiment />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
