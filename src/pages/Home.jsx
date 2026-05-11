@@ -241,6 +241,17 @@ const ALL_EXPERIMENTS = [
     available: true,
   },
   {
+    title: "Relative Density of Liquids",
+    description: "Fill a precision density bottle with kerosene, glycerine, salt water or ethanol, weigh all three masses, apply the pyknometer formula, then confirm your result with a hydrometer.",
+    icon: Droplets,
+    path: "/experiment/relative-density",
+    accentColor: "#0891b2",
+    accentBg: "from-cyan-500 to-sky-600",
+    subject: "Physics",
+    difficulty: "Medium",
+    available: true,
+  },
+  {
     title: "Diode Rectification",
     description: "Connect a 1N4007 diode in forward and reverse bias, watch the LED respond, then observe how a single diode strips AC down to pulsating DC — the core of every power supply.",
     icon: Zap,
