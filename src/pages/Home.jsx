@@ -241,6 +241,17 @@ const ALL_EXPERIMENTS = [
     available: true,
   },
   {
+    title: "Diode Rectification",
+    description: "Connect a 1N4007 diode in forward and reverse bias, watch the LED respond, then observe how a single diode strips AC down to pulsating DC — the core of every power supply.",
+    icon: Zap,
+    path: "/experiment/diode-rectification",
+    accentColor: "#7c3aed",
+    accentBg: "from-violet-500 to-purple-600",
+    subject: "Physics",
+    difficulty: "Medium",
+    available: true,
+  },
+  {
     title: "Plant Growth Factors",
     description: "Investigate how light, water, and soil nutrients affect plant growth rates.",
     icon: Leaf,
