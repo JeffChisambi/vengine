@@ -263,6 +263,17 @@ const ALL_EXPERIMENTS = [
     available: true,
   },
   {
+    title: "Simple Transformer",
+    description: "Wind primary and secondary coils on a laminated iron core, apply 240 V AC, and explore how the turns ratio controls voltage step-up and step-down — then verify that power is conserved.",
+    icon: Zap,
+    path: "/experiment/transformer",
+    accentColor: "#6366f1",
+    accentBg: "from-indigo-500 to-violet-600",
+    subject: "Physics",
+    difficulty: "Medium",
+    available: true,
+  },
+  {
     title: "Plant Growth Factors",
     description: "Investigate how light, water, and soil nutrients affect plant growth rates.",
     icon: Leaf,

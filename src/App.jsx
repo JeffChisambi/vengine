@@ -23,6 +23,7 @@ import OsmosisExperiment from "./pages/OsmosisExperiment";
 import OxygenExperiment from "./pages/OxygenExperiment";
 import DiodeExperiment from "./pages/DiodeExperiment";
 import RelativeDensityExperiment from "./pages/RelativeDensityExperiment";
+import TransformerExperiment from "./pages/TransformerExperiment";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="/experiment/oxygen" element={<OxygenExperiment />} />
           <Route path="/experiment/diode-rectification" element={<DiodeExperiment />} />
           <Route path="/experiment/relative-density" element={<RelativeDensityExperiment />} />
+          <Route path="/experiment/transformer" element={<TransformerExperiment />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
